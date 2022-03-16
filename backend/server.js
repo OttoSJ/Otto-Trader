@@ -20,7 +20,7 @@ app.use(methodOverride("_method"));
 
 // ROUTES
 app.use("/api/users", require("./routes/userRoutes"));
-app.use("/api/inventory", require("./routes/inventoryRoutes"));
+app.use("/api/inventory", require("./routes/carRoutes"));
 
 app.get("/", (req, res) => {
   console.log("I'm awake");

@@ -1,0 +1,129 @@
+const asyncHandler = require("express-async-handler");
+const Car = require("../models/carModel");
+const User = require("../models/userModel");
+
+// ALL ROUTES ARE PROTECTED AND VERIFIED TO THIS POINT!
+
+const getCar = asyncHandler(async (req, res) => {
+  const cars = await Car.find({ user: req.user.id });
+  res.status(200).json(cars);
+});
+
+const setCar = asyncHandler(async (req, res) => {
+  const {
+    make,
+    model,
+    brand,
+    year,
+    type,
+    listprice,
+    color,
+    drivetype,
+    engine,
+    transmission,
+    comments,
+    image,
+    mileage,
+    ac,
+    leatherseats,
+    sunroof,
+    bluetooth,
+    cruisecontrol,
+    satradio,
+    auxport,
+    amfm,
+  } = req.body;
+
+  if (!make || !model || !year || !type || !listprice || !color || !mileage) {
+    res.status(400);
+    throw new Error("Please add all fields");
+  }
+
+  const car = await Car.create({
+    make,
+    model,
+    brand,
+    year,
+    type,
+    listprice,
+    color,
+    drivetype,
+    engine,
+    transmission,
+    comments,
+    image,
+    mileage,
+    ac,
+    leatherseats,
+    sunroof,
+    bluetooth,
+    cruisecontrol,
+    satradio,
+    auxport,
+    amfm,
+    user: req.user.id,
+  });
+
+  res.status(200).json(car);
+
+  // if (car) {
+  //   res.redirect("/api/users");
+  // } else {
+  //   res.status(400);
+  //   throw new Error("Invalid user data");
+  // }
+});
+
+const updateCar = asyncHandler(async (req, res) => {
+  const car = await Car.findById(req.params.id);
+  if (!car) {
+    res.status(400);
+    throw new Error("Car not found");
+  }
+
+  if (!req.user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  if (car.user.toString() !== req.user.id) {
+    res.status(401);
+    throw new Error("User not authorized");
+  }
+
+  const updatedCar = await Car.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+
+  res.status(200).json(updatedCar);
+});
+
+const deleteCar = asyncHandler(async (req, res) => {
+  const car = await Car.findById(req.params.id);
+
+  if (!car) {
+    res.status(400);
+    throw new Error("Car not found");
+  }
+
+  if (!req.user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  if (car.user.toString() !== req.user.id) {
+    res.status(401);
+    throw new Error("User not authorized");
+  }
+
+  await car.remove();
+
+  res.status(200).json({ id: req.params.id });
+});
+
+module.exports = {
+  getCar,
+  updateCar,
+  setCar,
+  deleteCar,
+};
