@@ -6,6 +6,7 @@ const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const colors = require("colors");
 const connectDB = require("./config/db");
+const { errorHandler } = require("./middleware/errorMiddleware");
 connectDB();
 
 // CONFIGURATION
@@ -26,6 +27,8 @@ app.get("/", (req, res) => {
   console.log("I'm awake");
   res.send("Hello World");
 });
+
+app.use(errorHandler);
 
 // LISTEN
 app.listen(PORT, () => {

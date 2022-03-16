@@ -1,12 +1,24 @@
 const asyncHandler = require("express-async-handler");
+const res = require("express/lib/response");
 const Car = require("../models/carModel");
 const User = require("../models/userModel");
 
 // ALL ROUTES ARE PROTECTED AND VERIFIED TO THIS POINT!
 
-const getCar = asyncHandler(async (req, res) => {
+const getCars = asyncHandler(async (req, res) => {
   const cars = await Car.find({ user: req.user.id });
   res.status(200).json(cars);
+});
+
+const getOneCar = asyncHandler(async (req, res) => {
+  const foundCar = await Car.findById(req.params.id);
+
+  if (!foundCar) {
+    res.status(400);
+    throw new Error("Car not found");
+  }
+
+  res.status(200).json(foundCar);
 });
 
 const setCar = asyncHandler(async (req, res) => {
@@ -122,7 +134,8 @@ const deleteCar = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  getCar,
+  getCars,
+  getOneCar,
   updateCar,
   setCar,
   deleteCar,
