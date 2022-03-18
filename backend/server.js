@@ -20,6 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 
 // ROUTES
+// app.use("/api/sellers", require("./models/seller_seed"));
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/inventory", require("./routes/carRoutes"));
 
