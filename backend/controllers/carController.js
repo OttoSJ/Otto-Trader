@@ -4,9 +4,9 @@ const Car = require("../models/carModel");
 const User = require("../models/userModel");
 
 // ALL ROUTES ARE PROTECTED AND VERIFIED TO THIS POINT!
-
+// { user: req.user.id }
 const getCars = asyncHandler(async (req, res) => {
-  const cars = await Car.find({ user: req.user.id });
+  const cars = await Car.find();
   res.status(200).json(cars);
 });
 

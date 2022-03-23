@@ -10,7 +10,7 @@ const {
 
 const { protect } = require("../middleware/authMiddleware");
 
-router.get("/", protect, getCars);
+router.get("/", getCars);
 router.get("/:id", getOneCar);
 router.post("/", protect, setCar);
 router.put("/:id", protect, updateCar);
