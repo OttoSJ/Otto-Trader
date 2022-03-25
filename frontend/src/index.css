@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 120vh;
 }
 
 code {
@@ -18,4 +19,18 @@ code {
 
 .headings {
   text-align: center;
+  margin-top: 2rem;
+}
+
+.options-container {
+  width: 45rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.col-md-2 {
+  margin: 1rem;
 }

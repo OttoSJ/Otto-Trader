@@ -45,7 +45,7 @@ function Registration() {
       toast.error(message);
     }
     if (isSuccess || user) {
-      navigate("/");
+      navigate("/sellerdashboard");
     }
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
@@ -195,7 +195,7 @@ function Registration() {
               onChange={onChange}
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-3">
             <label htmlFor="state" className="form-label">
               State
             </label>
@@ -259,7 +259,7 @@ function Registration() {
               <option value="WY">Wyoming</option>
             </select>
           </div>
-          <div className="col-md-2">
+          <div className="col-md-3">
             <label htmlFor="zip" className="form-label">
               Zip
             </label>

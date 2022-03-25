@@ -5,6 +5,8 @@ import Login from "./components/Login";
 import Registration from "./components/Registration";
 import HomePage from "./components/HomePage";
 import "bootstrap/dist/css/bootstrap.min.css";
+import SellerDashboard from "./components/SellerDashboard";
+import CarRegistration from "./components/CarRegistration";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />
+          <Route path="/sellerdashboard" element={<SellerDashboard />} />
+          <Route path="/carregistration" element={<CarRegistration />} />
         </Routes>
       </Router>
     </>

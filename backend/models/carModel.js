@@ -14,10 +14,7 @@ const carSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please add model"],
     },
-    brand: {
-      type: String,
-      required: false,
-    },
+
     year: {
       type: Number,
       required: [true, "Please use numbers only"],
@@ -47,7 +44,7 @@ const carSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    comments: {
+    discription: {
       type: String,
       required: false,
     },
