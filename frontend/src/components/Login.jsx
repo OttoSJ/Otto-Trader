@@ -56,41 +56,49 @@ function Login() {
 
   return (
     <>
-      <section className="heading">
+      <section className="headings container">
         <h1>
           <FaSignInAlt /> Login
-          <p>Login and start setting goals</p>
+          <p className="mt-5">Login To Manage Inventory</p>
         </h1>
       </section>
       <section className="form">
-        <form onSubmit={onSubmit}>
-          <div className="form-group">
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              name="email"
-              value={email}
-              placeholder="Enter your email"
-              onChange={onChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              name="password"
-              value={password}
-              placeholder="Enter password"
-              onChange={onChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <button type="submit" className="btn btn-block">
-              Submit
-            </button>
+        <form onSubmit={onSubmit} className="row g-3 mt-3">
+          <div className="container-centered">
+            <div className="form-group col-6">
+              <label htmlFor="email" className="form-label">
+                Email
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                value={email}
+                placeholder="Enter your email"
+                onChange={onChange}
+              />
+            </div>
+            <br />
+            <div className="form-group col-6">
+              <label htmlFor="password" className="form-label">
+                Password
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                name="password"
+                value={password}
+                placeholder="Enter password"
+                onChange={onChange}
+              />
+            </div>
+            <div className="form-group">
+              <button type="submit" className="btn btn-primary mt-5">
+                Submit
+              </button>
+            </div>
           </div>
         </form>
       </section>

@@ -22,6 +22,14 @@ code {
   margin-top: 2rem;
 }
 
+.container-centered {
+  /* position: relative; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .options-container {
   width: 45rem;
   display: flex;

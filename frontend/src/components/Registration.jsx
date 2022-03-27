@@ -93,7 +93,7 @@ function Registration() {
           <p className="p-5">Please Create Your Account!</p>
         </h1>
         <form onSubmit={onSubmit} className="row g-3 mt-3">
-          <div className="col-6">
+          <div className="col-6 ">
             <label htmlFor="firstname" className="form-label">
               First Name
             </label>
