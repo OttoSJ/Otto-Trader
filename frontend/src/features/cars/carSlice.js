@@ -24,10 +24,11 @@ export const createCar = createAsyncThunk(
     }
   }
 );
+
 export const getCars = createAsyncThunk("cars/getAll", async (_, thunkAPI) => {
   try {
-    const token = thunkAPI.getState().auth.user.token;
-    return await carService.createCar(token);
+    // const token = thunkAPI.getState().auth.user.token;
+    return await carService.getCars();
   } catch (error) {
     const message =
       (error.response && error.reponse.data && error.response.data.message) ||
@@ -36,12 +37,26 @@ export const getCars = createAsyncThunk("cars/getAll", async (_, thunkAPI) => {
     return thunkAPI.rejectWithValue(message);
   }
 });
+
+// export const getCars = createAsyncThunk("cars/getAll", async (_, thunkAPI) => {
+//   try {
+//     const token = thunkAPI.getState().auth.user.token;
+//     return await carService.getCars(token);
+//   } catch (error) {
+//     const message =
+//       (error.response && error.reponse.data && error.response.data.message) ||
+//       error.message ||
+//       error.toString();
+//     return thunkAPI.rejectWithValue(message);
+//   }
+// });
+
 export const deleteCar = createAsyncThunk(
   "cars/delete",
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await carService.createCar(id, token);
+      return await carService.deleteCar(id, token);
     } catch (error) {
       const message =
         (error.response && error.reponse.data && error.response.data.message) ||
@@ -79,7 +94,7 @@ export const carSlice = createSlice({
       .addCase(getCars.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.cars.push(action.payload);
+        state.cars = action.payload;
       })
       .addCase(getCars.rejected, (state, action) => {
         state.isLoading = false;

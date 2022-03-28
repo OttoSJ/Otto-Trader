@@ -4,7 +4,7 @@ import { FaSignInAlt } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import { login, reset } from "../features/auth/authSlice";
+import { login, reset } from "../features/auth/authSlice";
 import Spinner from "../components/Spinner";
 
 function Login() {
@@ -30,7 +30,7 @@ function Login() {
       navigate("/");
     }
 
-    // dispatch(reset());
+    dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const onChange = (e) => {
@@ -47,7 +47,7 @@ function Login() {
       password,
     };
 
-    // dispatch(login(userData));
+    dispatch(login(userData));
   };
 
   if (isLoading) {
@@ -59,7 +59,7 @@ function Login() {
       <section className="headings container">
         <h1>
           <FaSignInAlt /> Login
-          <p className="mt-5">Login To Manage Inventory</p>
+          <p className="mt-5">Login To Manage Vehicle Inventory</p>
         </h1>
       </section>
       <section className="form">

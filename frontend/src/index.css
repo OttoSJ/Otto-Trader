@@ -39,6 +39,65 @@ code {
   align-items: center;
 }
 
+.sellers-page-container {
+  width: 100vw;
+  /* height: 150vh; */
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.sellers-main-container {
+  border: 2px solid grey;
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.sellers-container {
+  border: 2px solid grey;
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.sellers-main-message-container {
+  width: 100%;
+  height: 30%;
+  /* border: 2px solid grey; */
+}
+
+.sellers-card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  border: 2px solid grey;
+  width: 80%;
+  height: 110%;
+}
+
+.sellers-main-picture {
+  height: 70%;
+  object-fit: fill;
+}
+
+.fake-pic-card {
+  margin: 10px;
+  width: 95%;
+  height: 50%;
+  border: 2px solid grey;
+}
 .col-md-2 {
   margin: 1rem;
 }
