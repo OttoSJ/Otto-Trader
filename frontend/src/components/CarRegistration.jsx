@@ -119,7 +119,7 @@ function CarRegistration() {
         <div className="container">
           <h1 className="mt-5 headings">
             {" "}
-            <FaCar /> Register Vehilce
+            <FaCar /> Register Vehilcle
             <p className="p-5">Please Register Your Vehicle!</p>
           </h1>
           <form onSubmit={onSubmit} className="row g-3 mt-3">
@@ -341,7 +341,7 @@ function CarRegistration() {
                   <option value="false">No </option>
                 </select>
               </div>
-              <div className="col-md-2">
+              <div className="col-md-2 ">
                 <label htmlFor="satradio" className="form-label">
                   Sat Radio
                 </label>
@@ -356,7 +356,7 @@ function CarRegistration() {
                   <option value="false">No </option>
                 </select>
               </div>
-              <div className="col-md-2">
+              <div className="col-md-2 ">
                 <label htmlFor="auxport" className="form-label">
                   Aux Port
                 </label>

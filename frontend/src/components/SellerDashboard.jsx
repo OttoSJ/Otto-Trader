@@ -5,13 +5,22 @@ import { useNavigate } from "react-router-dom";
 import { getCars } from "../features/cars/carSlice";
 
 function SellerDashboard() {
-  const { cars, isLoading, isError } = useSelector((state) => state.cars);
+  const { cars, isLoading, isError, message } = useSelector(
+    (state) => state.cars
+  );
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // I will need to change getCars to getOneCar after I add the slice and serive functions
   useEffect(() => {
+    if (isError) {
+      console.log(message);
+    }
+
+    if (!user) {
+      navigate("/login");
+    }
     dispatch(getCars());
   }, [user, navigate]);
 
@@ -19,6 +28,7 @@ function SellerDashboard() {
 
   const handleCar = (e) => {
     console.log("Car handled");
+    navigate("/cardetails");
   };
 
   return (

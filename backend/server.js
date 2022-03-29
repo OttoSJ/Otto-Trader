@@ -17,7 +17,7 @@ const app = express();
 // MIDDLEWARE
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(methodOverride("_method"));
+// app.use(methodOverride("_method"));
 
 // ROUTES
 // app.use("/api/sellers", require("./models/seller_seed"));

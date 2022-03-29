@@ -30,6 +30,13 @@ code {
   align-items: center;
 }
 
+.container-flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .options-container {
   width: 45rem;
   display: flex;
@@ -51,16 +58,16 @@ code {
 }
 
 .sellers-main-container {
-  border: 2px solid grey;
-  width: 80%;
-  height: 80%;
+  border: 2px solid rgb(202, 138, 138);
+  width: 95%;
+  height: 95%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .sellers-container {
-  border: 2px solid grey;
+  border: 2px solid rgb(150, 25, 25);
   width: 80%;
   height: 80%;
   display: flex;
@@ -92,12 +99,18 @@ code {
   object-fit: fill;
 }
 
-.fake-pic-card {
+.car-details-image {
+  width: 90%;
+  height: 70%;
+  object-fit: cover;
+}
+
+/* .fake-pic-card {
   margin: 10px;
   width: 95%;
   height: 50%;
   border: 2px solid grey;
-}
+} */
 .col-md-2 {
   margin: 1rem;
 }
