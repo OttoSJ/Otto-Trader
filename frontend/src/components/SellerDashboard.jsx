@@ -1,10 +1,12 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getCars } from "../features/cars/carSlice";
 
 function SellerDashboard() {
+  const [carData, setCarData] = useState({});
+
   const { cars, isLoading, isError, message } = useSelector(
     (state) => state.cars
   );
@@ -26,8 +28,8 @@ function SellerDashboard() {
 
   console.log(cars);
 
-  const handleCar = (e) => {
-    console.log("Car handled");
+  const handleCar = (e, car) => {
+    console.log(car);
     navigate("/cardetails");
   };
 
@@ -38,9 +40,13 @@ function SellerDashboard() {
           <h1 className="mb-5">Seller's Dashboard</h1>
         </div>
 
-        <div onClick={handleCar} className="sellers-container">
+        <div className="sellers-container">
           {cars.map((car) => (
-            <main key={car._id} className="sellers-main-container mt-3">
+            <main
+              key={car._id}
+              onClick={(e) => handleCar(e, car)}
+              className="sellers-main-container mt-3"
+            >
               <img className="sellers-main-picture" src={car.image} alt="" />
               <div className="sellers-main-message-container">
                 <p className="m-3">
