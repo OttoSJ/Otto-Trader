@@ -23,7 +23,6 @@ code {
 }
 
 .container-centered {
-  /* position: relative; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -92,6 +91,12 @@ code {
   border: 2px solid grey;
   width: 80%;
   height: 110%;
+}
+
+.comments-container {
+  width: 60%;
+  height: 70%;
+  /* border: 2px solid grey; */
 }
 
 .sellers-main-picture {

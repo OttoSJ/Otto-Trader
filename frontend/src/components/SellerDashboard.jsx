@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getCars } from "../features/cars/carSlice";
+import { clearData, setData } from "../features/carDetailsSlice";
 
 function SellerDashboard() {
   const [carData, setCarData] = useState({});
@@ -11,10 +12,10 @@ function SellerDashboard() {
     (state) => state.cars
   );
   const { user } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // I will need to change getCars to getOneCar after I add the slice and serive functions
   useEffect(() => {
     if (isError) {
       console.log(message);
@@ -26,10 +27,10 @@ function SellerDashboard() {
     dispatch(getCars());
   }, [user, navigate]);
 
-  console.log(cars);
+  const handleCarDetails = (e, car) => {
+    e.preventDefault();
+    dispatch(setData({ car }));
 
-  const handleCar = (e, car) => {
-    console.log(car);
     navigate("/cardetails");
   };
 
@@ -44,14 +45,15 @@ function SellerDashboard() {
           {cars.map((car) => (
             <main
               key={car._id}
-              onClick={(e) => handleCar(e, car)}
+              onClick={(e) => handleCarDetails(e, car)}
               className="sellers-main-container mt-3"
             >
               <img className="sellers-main-picture" src={car.image} alt="" />
               <div className="sellers-main-message-container">
                 <p className="m-3">
-                  2019 {car.make} <br /> {car.model} <br />{" "}
-                  {`${car.listprice} ${car.mileage}mi`}
+                  2019 {car.make.charAt().toUpperCase() + car.make.slice(1)}{" "}
+                  <br /> {car.model.charAt().toUpperCase() + car.model.slice(1)}
+                  <br /> {`$${car.listprice} ${car.mileage}mi`}
                 </p>
               </div>
             </main>
