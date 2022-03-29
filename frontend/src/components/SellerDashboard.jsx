@@ -27,6 +27,9 @@ function SellerDashboard() {
     dispatch(getCars());
   }, [user, navigate]);
 
+  const sellersInventory = cars.filter((car) => car.user === user._id);
+  console.log(sellersInventory);
+
   const handleCarDetails = (e, car) => {
     e.preventDefault();
     dispatch(setData({ car }));
@@ -42,7 +45,7 @@ function SellerDashboard() {
         </div>
 
         <div className="sellers-container">
-          {cars.map((car) => (
+          {sellersInventory.map((car) => (
             <main
               key={car._id}
               onClick={(e) => handleCarDetails(e, car)}

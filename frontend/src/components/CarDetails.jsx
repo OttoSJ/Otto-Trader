@@ -82,6 +82,30 @@ function CarDetails() {
             </div>
             <div>
               <p>
+                {drivetype
+                  ? drivetype.charAt(0).toUpperCase() + drivetype.slice(1)
+                  : "N/A"}{" "}
+              </p>
+            </div>
+          </div>
+          <hr />
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>Vehicle Type</p>
+            </div>
+            <div>
+              <p>
+                {type ? type.charAt(0).toUpperCase() + type.slice(1) : "N/A"}{" "}
+              </p>
+            </div>
+          </div>
+          <hr />
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>Drive Train</p>
+            </div>
+            <div>
+              <p>
                 {transmission
                   ? transmission.charAt(0).toUpperCase() + transmission.slice(1)
                   : "N/A"}{" "}
