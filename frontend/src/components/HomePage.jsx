@@ -41,14 +41,14 @@ function HomePage() {
           <h1 className="mb-5">Home Page</h1>
         </div>
 
-        <div className="sellers-container">
+        <div className="main-display-container">
           {cars.map((car) => (
             <main
               key={car._id}
               onClick={(e) => handleCarDetails(e, car)}
-              className="sellers-main-container mt-3"
+              className="main-container mt-3"
             >
-              <img className="sellers-main-picture" src={car.image} alt="" />
+              <img className="main-picture" src={car.image} alt="" />
               <div className="sellers-main-message-container">
                 <p className="m-3">
                   2019 {car.make.charAt().toUpperCase() + car.make.slice(1)}{" "}
