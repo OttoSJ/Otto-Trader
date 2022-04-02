@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import SellerDashboard from "./components/SellerDashboard";
 import CarRegistration from "./components/CarRegistration";
 import CarDetails from "./components/CarDetails";
+import EditCarDetails from "./components/EditCarDetails";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/sellerdashboard" element={<SellerDashboard />} />
           <Route path="/carregistration" element={<CarRegistration />} />
           <Route path="/cardetails" element={<CarDetails />} />
+          <Route path="/editcardetails" element={<EditCarDetails />} />
         </Routes>
       </Router>
     </>

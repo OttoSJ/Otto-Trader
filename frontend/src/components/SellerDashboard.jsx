@@ -4,9 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getCars } from "../features/cars/carSlice";
 import { clearData, setData } from "../features/carDetailsSlice";
+import { numberWithCommas } from "../utilities.js/functions";
+import { upperCase } from "../utilities.js/functions";
 
 function SellerDashboard() {
-  const [carData, setCarData] = useState({});
+  // const [carData, setCarData] = useState({});
 
   const { cars, isLoading, isError, message } = useSelector(
     (state) => state.cars
@@ -33,7 +35,7 @@ function SellerDashboard() {
   const handleCarDetails = (e, car) => {
     e.preventDefault();
     dispatch(setData({ car }));
-
+    console.log(car);
     navigate("/cardetails");
   };
 
@@ -54,9 +56,11 @@ function SellerDashboard() {
               <img className="main-picture" src={car.image} alt="" />
               <div className="sellers-main-message-container">
                 <p className="m-3">
-                  2019 {car.make.charAt().toUpperCase() + car.make.slice(1)}{" "}
-                  <br /> {car.model.charAt().toUpperCase() + car.model.slice(1)}
-                  <br /> {`$${car.listprice} ${car.mileage}mi`}
+                  {car.year} {upperCase(car.make)} <br /> {upperCase(car.model)}
+                  <br />{" "}
+                  {`$${numberWithCommas(car.listprice)} / ${numberWithCommas(
+                    car.mileage
+                  )}mi`}
                 </p>
               </div>
             </main>

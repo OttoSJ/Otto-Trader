@@ -1,126 +1,41 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { FaCar, FaOptinMonster } from "react-icons/fa";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { FaCar } from "react-icons/fa";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createCar, reset } from "../features/cars/carSlice";
-import Spinner from "./Spinner";
+import { useNavigate } from "react-router-dom";
+import { getCars } from "../features/cars/carSlice";
 
-function CarRegistration() {
-  const [formData, setFromData] = useState({
-    make: "",
-    model: "",
-    year: "",
-    type: "",
-    listprice: "",
-    color: "",
-    drivetype: "",
-    engine: "",
-    transmission: "",
-    discription: "",
-    image: "",
-    mileage: "",
-    ac: "",
-    leatherseats: "",
-    sunroof: "",
-    bluetooth: "",
-    cruisecontrol: "",
-    satradio: "",
-    auxport: "",
-    amfm: "",
-  });
-
-  const {
-    make,
-    model,
-    year,
-    type,
-    listprice,
-    color,
-    drivetype,
-    engine,
-    transmission,
-    discription,
-    image,
-    mileage,
-    ac,
-    leatherseats,
-    sunroof,
-    bluetooth,
-    cruisecontrol,
-    satradio,
-    auxport,
-    amfm,
-  } = formData;
-  console.log(formData);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const { car, isError, isLoading, isSuccess, message } = useSelector(
+function EditCarDetails() {
+  const { cars, isLoading, isError, message } = useSelector(
     (state) => state.cars
   );
+  const { user } = useSelector((state) => state.auth);
+  const { carDetails } = useSelector((state) => state.carDetails);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isError) {
-      toast.error(message);
+      console.log(message);
     }
-    if (isSuccess || car) {
-      navigate("/sellerdashboard");
+
+    if (!user) {
+      navigate("/login");
     }
-    dispatch(reset());
-  }, [car, isError, isSuccess, message, navigate, dispatch]);
+    dispatch(getCars());
+  }, [user, navigate]);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (!car) {
-      toast.error("Please login or create and account");
-    } else {
-      const carData = {
-        make,
-        model,
-        year,
-        type,
-        listprice,
-        color,
-        drivetype,
-        engine,
-        transmission,
-        discription,
-        image,
-        mileage,
-        ac,
-        leatherseats,
-        sunroof,
-        bluetooth,
-        cruisecontrol,
-        satradio,
-        auxport,
-        amfm,
-      };
-      dispatch(createCar(carData));
-    }
-  };
-
-  const onChange = (e) => {
-    setFromData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  if (isLoading) {
-    return <Spinner />;
-  }
-
+  const onSubmit = (e) => {};
+  const onChange = (e) => {};
+  console.log(carDetails);
   return (
     <div>
       <div>
         <div className="container">
           <h1 className="mt-5 headings">
             {" "}
-            <FaCar className="mb-1" /> Register Vehilcle
-            <p className="p-5">Please Register Your Vehicle!</p>
+            <FaCar className="mb-1" /> Edit Vehilcle Details
           </h1>
           <form onSubmit={onSubmit} className="row g-3 mt-3">
             <div className="col-6">
@@ -400,4 +315,4 @@ function CarRegistration() {
   );
 }
 
-export default CarRegistration;
+export default EditCarDetails;

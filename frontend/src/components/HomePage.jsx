@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getCars } from "../features/cars/carSlice";
 import { clearData, setData } from "../features/carDetailsSlice";
+import { numberWithCommas } from "../utilities.js/functions";
+import { upperCase } from "../utilities.js/functions";
 
 function HomePage() {
   const [carData, setCarData] = useState({});
@@ -51,19 +53,16 @@ function HomePage() {
               <img className="main-picture" src={car.image} alt="" />
               <div className="sellers-main-message-container">
                 <p className="m-3">
-                  2019 {car.make.charAt().toUpperCase() + car.make.slice(1)}{" "}
-                  <br /> {car.model.charAt().toUpperCase() + car.model.slice(1)}
-                  <br /> {`$${car.listprice} ${car.mileage}mi`}
+                  {car.year} {upperCase(car.make)} <br /> {upperCase(car.model)}
+                  <br />{" "}
+                  {`$${numberWithCommas(car.listprice)} / ${numberWithCommas(
+                    car.mileage
+                  )}mi`}
                 </p>
               </div>
             </main>
           ))}
         </div>
-
-        {/* <section className="sellers-card-container">
-          <div className="fake-pic-card"></div>
-          <div className="fake-pic-card"></div>
-        </section> */}
       </div>
     </>
   );
