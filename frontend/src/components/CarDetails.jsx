@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { numberWithCommas } from "../utilities.js/functions";
 import { upperCase } from "../utilities.js/functions";
+import EditCarDetails from "./EditCarDetails";
 
 function CarDetails() {
   const { carDetails } = useSelector((state) => state.carDetails);
@@ -41,7 +42,6 @@ function CarDetails() {
           <h1 className="mb-5">Edit Car Details</h1>
         </div>
         <div className="container-centered">
-          {/*  */}
           <div className=" container-centered-start">
             <img className="car-details-image" src={image} alt="" />
           </div>
@@ -50,6 +50,7 @@ function CarDetails() {
               {`${year}  ${make.toUpperCase()}  ${model.toUpperCase()}`}
             </h1>
             <hr />
+            {/*  */}
             <div className="container-flex-row mt-4">
               <div>
                 <p>List Price</p>
@@ -193,10 +194,8 @@ function CarDetails() {
             <hr />
             <div className="container-centered mt-4">
               <p>Comments</p>
-              {/* <p className=" comments-container  ">
-                {comments ? comments : "No Comments"}
-              </p> */}
             </div>
+            {/*  */}
           </section>
         </div>
       </div>
