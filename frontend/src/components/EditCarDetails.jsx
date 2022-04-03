@@ -1,16 +1,72 @@
 import React from "react";
 import { FaCar } from "react-icons/fa";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getCars } from "../features/cars/carSlice";
+import { getCars, updateCarDetails } from "../features/cars/carSlice";
+import { clearData, setData } from "../features/carDetailsSlice";
+import { upperCase, numberWithCommas } from "../utilities.js/functions";
+import { toast } from "react-toastify";
 
 function EditCarDetails() {
-  const { cars, isLoading, isError, message } = useSelector(
+  const carDetails = JSON.parse(localStorage.getItem("cardetails"));
+
+  let {
+    _id,
+    make,
+    year,
+    model,
+    type,
+    listprice,
+    color,
+    drivetype,
+    engine,
+    transmission,
+    discription,
+    image,
+    mileage,
+    ac,
+    leatherseats,
+    sunroof,
+    bluetooth,
+    comments,
+    cruisecontrol,
+    satradio,
+    auxport,
+    amfm,
+    createdAt,
+  } = carDetails;
+
+  let [formData, setFromData] = useState({
+    _id: _id,
+    make: make,
+    model: model,
+    year: year,
+    type: type,
+    listprice: listprice,
+    color: color,
+    drivetype: drivetype,
+    engine: engine,
+    transmission: transmission,
+    discription: discription,
+    image: image,
+    mileage: mileage,
+    ac: ac,
+    leatherseats: leatherseats,
+    sunroof: sunroof,
+    bluetooth: bluetooth,
+    cruisecontrol: cruisecontrol,
+    satradio: satradio,
+    auxport: auxport,
+    amfm: amfm,
+  });
+
+  const { cars, isLoading, isSuccess, isError, message } = useSelector(
     (state) => state.cars
   );
   const { user } = useSelector((state) => state.auth);
-  const { carDetails } = useSelector((state) => state.carDetails);
+
+  // console.log(_id);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,16 +75,31 @@ function EditCarDetails() {
     if (isError) {
       console.log(message);
     }
-
     if (!user) {
       navigate("/login");
     }
-    dispatch(getCars());
-  }, [user, navigate]);
 
-  const onSubmit = (e) => {};
-  const onChange = (e) => {};
-  console.log(carDetails);
+    dispatch(getCars());
+  }, [user, isSuccess, isError, navigate]);
+
+  // dispatch(setData({ carDetails }));
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (!user) {
+      toast.error("Please login or create and account");
+    } else {
+      navigate("/cardetails");
+      dispatch(updateCarDetails(formData));
+    }
+  };
+  const onChange = (e) => {
+    setFromData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   return (
     <div>
       <div>
@@ -43,6 +114,7 @@ function EditCarDetails() {
                 Make
               </label>
               <input
+                defaultValue={upperCase(make)}
                 autoFocus
                 type="text"
                 className="form-control"
@@ -57,6 +129,7 @@ function EditCarDetails() {
                 Model
               </label>
               <input
+                defaultValue={upperCase(model)}
                 type="text"
                 className="form-control"
                 name="model"
@@ -71,6 +144,7 @@ function EditCarDetails() {
                 Year
               </label>
               <input
+                defaultValue={year}
                 type="text"
                 className="form-control"
                 name="year"
@@ -83,6 +157,7 @@ function EditCarDetails() {
                 Body Type
               </label>
               <input
+                defaultValue={upperCase(type)}
                 type="text"
                 className="form-control"
                 name="type"
@@ -95,6 +170,7 @@ function EditCarDetails() {
                 Listprice
               </label>
               <input
+                defaultValue={`$${numberWithCommas(listprice)}`}
                 type="text"
                 className="form-control"
                 name="listprice"
@@ -107,6 +183,7 @@ function EditCarDetails() {
                 Color
               </label>
               <input
+                defaultValue={upperCase(color)}
                 type="text"
                 className="form-control"
                 name="color"
@@ -119,6 +196,7 @@ function EditCarDetails() {
                 Drive Type
               </label>
               <input
+                defaultValue={upperCase(drivetype ? drivetype : "N/A")}
                 type="text"
                 className="form-control"
                 name="drivetype"
@@ -133,6 +211,7 @@ function EditCarDetails() {
                 Engine
               </label>
               <input
+                defaultValue={upperCase(engine ? engine : "N/A")}
                 type="text"
                 className="form-control"
                 name="engine"
@@ -146,6 +225,7 @@ function EditCarDetails() {
                 Transmission
               </label>
               <input
+                defaultValue={upperCase(transmission ? transmission : "N/A")}
                 type="text"
                 className="form-control"
                 name="transmission"
@@ -158,6 +238,7 @@ function EditCarDetails() {
                 Image
               </label>
               <input
+                defaultValue={image}
                 type="text"
                 className="form-control"
                 name="image"
@@ -170,6 +251,7 @@ function EditCarDetails() {
                 Mileage
               </label>
               <input
+                defaultValue={numberWithCommas(mileage)}
                 type="text"
                 className="form-control"
                 name="mileage"

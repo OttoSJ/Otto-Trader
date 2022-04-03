@@ -34,7 +34,8 @@ function SellerDashboard() {
 
   const handleCarDetails = (e, car) => {
     e.preventDefault();
-    dispatch(setData({ car }));
+    // dispatch(clearData());
+    dispatch(setData(car));
     console.log(car);
     navigate("/cardetails");
   };

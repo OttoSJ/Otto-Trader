@@ -14,6 +14,7 @@ export const createCar = createAsyncThunk(
   async (carData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
+
       return await carService.createCar(carData, token);
     } catch (error) {
       const message =
@@ -30,6 +31,7 @@ export const updateCarDetails = createAsyncThunk(
   async (carData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
+      console.log(carData);
       return await carService.updateCarDetails(carData, token);
     } catch (error) {
       const message =

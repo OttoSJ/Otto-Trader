@@ -1,13 +1,25 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { numberWithCommas } from "../utilities.js/functions";
 import { upperCase } from "../utilities.js/functions";
-import EditCarDetails from "./EditCarDetails";
+import { clearData, setData } from "../features/carDetailsSlice";
 
 function CarDetails() {
+  const [carData, setCarData] = useState({});
   const { carDetails } = useSelector((state) => state.carDetails);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  console.log(carDetails);
 
   const handeleEditCarDetails = (e) => {
+    e.preventDefault();
+    dispatch(setData(carDetails));
+    localStorage.removeItem("cardetails");
+    localStorage.setItem("cardetails", JSON.stringify(carDetails));
+    navigate("/editcardetails");
     console.log(carDetails);
   };
 
@@ -34,7 +46,7 @@ function CarDetails() {
     satradio,
     sunroof,
     transmission,
-  } = carDetails.car;
+  } = carDetails;
   return (
     <>
       <div>
@@ -196,6 +208,7 @@ function CarDetails() {
               <p>Comments</p>
             </div>
             {/*  */}
+            {/* <EditCarDetails carDetails={carDetails} /> */}
           </section>
         </div>
       </div>

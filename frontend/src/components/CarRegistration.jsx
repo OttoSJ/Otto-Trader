@@ -53,6 +53,7 @@ function CarRegistration() {
     auxport,
     amfm,
   } = formData;
+
   console.log(formData);
   const navigate = useNavigate();
   const dispatch = useDispatch();

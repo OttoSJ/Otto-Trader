@@ -18,6 +18,8 @@ const updateCarDetails = async (carData, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
+  console.log(carData);
+  console.log(carData._id);
   const response = await axios.put(API_URL + carData._id, carData, config);
   return response.data;
 };
