@@ -91,6 +91,7 @@ function EditCarDetails() {
     } else {
       navigate("/cardetails");
       dispatch(updateCarDetails(formData));
+      dispatch(setData(formData));
     }
   };
   const onChange = (e) => {

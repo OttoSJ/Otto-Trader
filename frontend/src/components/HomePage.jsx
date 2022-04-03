@@ -10,7 +10,7 @@ import { upperCase } from "../utilities.js/functions";
 function HomePage() {
   const [carData, setCarData] = useState({});
 
-  const { cars, isLoading, isError, message } = useSelector(
+  const { cars, isLoading, isSuccess, isError, message } = useSelector(
     (state) => state.cars
   );
   const { user } = useSelector((state) => state.auth);
@@ -23,16 +23,13 @@ function HomePage() {
       console.log(message);
     }
 
-    if (!user) {
-      navigate("/");
-    }
     dispatch(getCars());
-  }, [user, navigate]);
+  }, [!user, user, isSuccess, navigate]);
 
   const handleCarDetails = (e, car) => {
     e.preventDefault();
     dispatch(setData({ car }));
-
+    dispatch(setData(car));
     navigate("/cardetails");
   };
 

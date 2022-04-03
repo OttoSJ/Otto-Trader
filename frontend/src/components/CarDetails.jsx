@@ -9,6 +9,7 @@ import { clearData, setData } from "../features/carDetailsSlice";
 function CarDetails() {
   const [carData, setCarData] = useState({});
   const { carDetails } = useSelector((state) => state.carDetails);
+  // const { user: userId } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -47,11 +48,16 @@ function CarDetails() {
     sunroof,
     transmission,
   } = carDetails;
+
+  // let carDetailsHeader =
+  //   userId._id === carDetails.user ? "Edit Car Details" : "Car Details";
+
   return (
     <>
       <div>
         <div onClick={(e) => handeleEditCarDetails(e)} className="headings">
-          <h1 className="mb-5">Edit Car Details</h1>
+          {/* <h1 className="mb-5"> {carDetailsHeader} </h1> */}
+          <h1 className="mb-5"> Car Details </h1>
         </div>
         <div className="container-centered">
           <div className=" container-centered-start">

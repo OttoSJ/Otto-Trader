@@ -18,11 +18,10 @@ function Header() {
   return (
     <>
       <Navbar expand="lg" className=" bg-dark navbar-dark p-3 ">
-        {user ? (
-          <Navbar.Brand href="/editcardetails" className="mx-5">
-            Edit Car Details
-          </Navbar.Brand>
-        ) : null}
+        <Navbar.Brand href="/" className="mx-1 mb-1">
+          Otto Trader
+        </Navbar.Brand>
+
         <Navbar.Toggle className="mr-auto" />
         <Navbar.Collapse>
           <Nav className="mr-auto"></Nav>
