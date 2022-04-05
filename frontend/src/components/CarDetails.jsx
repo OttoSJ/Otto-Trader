@@ -214,8 +214,6 @@ function CarDetails() {
             <div className="container-centered mt-4">
               <p>Comments</p>
             </div>
-            {/*  */}
-            {/* <EditCarDetails carDetails={carDetails} /> */}
           </section>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { getCars } from "../features/cars/carSlice";
 import { clearData, setData } from "../features/carDetailsSlice";
 import { numberWithCommas } from "../utilities.js/functions";
 import { upperCase } from "../utilities.js/functions";
+import { toast } from "react-toastify";
 
 function HomePage() {
   const [carData, setCarData] = useState({});
@@ -21,7 +22,7 @@ function HomePage() {
 
   useEffect(() => {
     if (isError) {
-      console.log(message);
+      toast.error(message);
     }
 
     dispatch(getCars());
@@ -37,8 +38,7 @@ function HomePage() {
     e.preventDefault();
     setQuery(search);
   };
-
-  const handleFilteredCar = (e, filteredCars) => {};
+  console.log(query);
 
   return (
     <>
@@ -46,14 +46,31 @@ function HomePage() {
         <div className="headings">
           <h1 className="mb-5">Home Page</h1>
         </div>
-        <main>
+        <section>
+          <form className="">
+            <div className="container-centered">
+              <input
+                className="search-bar"
+                type="text"
+                placeholder="   Search by Make or Model"
+                onChange={(e) => handleSearch(e, e.target.value)}
+              />
+            </div>
+          </form>
+        </section>
+        <div className="main-display-container">
           {cars
             ? cars
                 .filter((filteredCars) => {
                   if (query === "") {
                     return cars;
                   } else if (
-                    filteredCars.make ||
+                    filteredCars.make
+                      .toLowerCase()
+                      .includes(query.toLowerCase())
+                  ) {
+                    return filteredCars;
+                  } else if (
                     filteredCars.model
                       .toLowerCase()
                       .includes(query.toLowerCase())
@@ -62,35 +79,29 @@ function HomePage() {
                   }
                 })
                 .map((filteredCars) => (
-                  <div
-                    onClick={(e) => handleCarDetails(e, filteredCars)}
+                  <main
                     key={filteredCars._id}
+                    onClick={(e) => handleCarDetails(e, filteredCars)}
+                    className="main-container mt-3"
                   >
-                    <p className="text mx-5"> {filteredCars.username} </p>
-                  </div>
+                    <img
+                      className="main-picture"
+                      src={filteredCars.image}
+                      alt=""
+                    />
+                    <div className="sellers-main-message-container">
+                      <p className="m-3">
+                        {filteredCars.year} {upperCase(filteredCars.make)}{" "}
+                        <br /> {upperCase(filteredCars.model)}
+                        <br />{" "}
+                        {`$${numberWithCommas(
+                          filteredCars.listprice
+                        )} / ${numberWithCommas(filteredCars.mileage)}mi`}
+                      </p>
+                    </div>
+                  </main>
                 ))
             : null}
-        </main>
-
-        <div className="main-display-container">
-          {cars.map((car) => (
-            <main
-              key={car._id}
-              onClick={(e) => handleCarDetails(e, car)}
-              className="main-container mt-3"
-            >
-              <img className="main-picture" src={car.image} alt="" />
-              <div className="sellers-main-message-container">
-                <p className="m-3">
-                  {car.year} {upperCase(car.make)} <br /> {upperCase(car.model)}
-                  <br />{" "}
-                  {`$${numberWithCommas(car.listprice)} / ${numberWithCommas(
-                    car.mileage
-                  )}mi`}
-                </p>
-              </div>
-            </main>
-          ))}
         </div>
       </div>
     </>

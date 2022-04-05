@@ -13,6 +13,16 @@ code {
     monospace;
 }
 
+.car-details-image {
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+}
+
+.col-md-2 {
+  margin: 1rem;
+}
+
 .mr-auto {
   margin-left: auto;
 }
@@ -22,7 +32,8 @@ code {
   margin-top: 2rem;
 }
 
-.container-centered {
+.container-centered,
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -36,6 +47,11 @@ code {
   align-items: center;
 }
 
+.comments-container {
+  width: 60%;
+  height: 70%;
+}
+
 .options-container {
   width: 45rem;
   display: flex;
@@ -43,6 +59,7 @@ code {
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
+  border: 2px solid grey;
 }
 
 .main-container {
@@ -85,12 +102,12 @@ code {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  /* border: 2px solid grey; */
 }
 
 .sellers-main-message-container {
   width: 100%;
   height: 30%;
-  /* border: 2px solid grey; */
 }
 
 .sellers-card-container {
@@ -105,20 +122,17 @@ code {
   height: 110%;
 }
 
-.comments-container {
-  width: 60%;
-  height: 70%;
-  /* border: 2px solid grey; */
-}
-
-.car-details-image {
-  width: 100%;
-  height: 70%;
-  object-fit: cover;
-}
-
-.col-md-2 {
-  margin: 1rem;
+.search-bar {
+  width: 60vw;
+  margin-top: -2rem;
+  height: 2.5rem;
+  border: 2px solid rgb(37, 37, 128);
+  color: rgb(32, 32, 32);
+  background-color: rgb(224, 224, 224);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
 @media (min-width: 600px) {
@@ -150,5 +164,11 @@ code {
 
   .container-flex-row {
     width: 50rem;
+  }
+
+  .search-bar {
+    width: 380%;
+    margin-bottom: 1rem;
+    margin-top: 0;
   }
 }
