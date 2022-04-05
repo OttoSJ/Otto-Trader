@@ -48,24 +48,31 @@ function SellerDashboard() {
         </div>
 
         <div className="main-display-container">
-          {sellersInventory.map((car) => (
-            <main
-              key={car._id}
-              onClick={(e) => handleCarDetails(e, car)}
-              className="main-container mt-3"
-            >
-              <img className="main-picture" src={car.image} alt="" />
-              <div className="sellers-main-message-container">
-                <p className="m-3">
-                  {car.year} {upperCase(car.make)} <br /> {upperCase(car.model)}
-                  <br />{" "}
-                  {`$${numberWithCommas(car.listprice)} / ${numberWithCommas(
-                    car.mileage
-                  )}mi`}
-                </p>
-              </div>
-            </main>
-          ))}
+          {sellersInventory.length > 0 ? (
+            sellersInventory.map((car) => (
+              <main
+                key={car._id}
+                onClick={(e) => handleCarDetails(e, car)}
+                className="main-container mt-3"
+              >
+                <img className="main-picture" src={car.image} alt="" />
+                <div className="sellers-main-message-container">
+                  <p className="m-3">
+                    {car.year} {upperCase(car.make)} <br />{" "}
+                    {upperCase(car.model)}
+                    <br />{" "}
+                    {`$${numberWithCommas(car.listprice)} / ${numberWithCommas(
+                      car.mileage
+                    )}mi`}
+                  </p>
+                </div>
+              </main>
+            ))
+          ) : (
+            <h6 className="container-centered">
+              You have no vehicles in your inventory
+            </h6>
+          )}
         </div>
 
         {/* <section className="sellers-card-container">

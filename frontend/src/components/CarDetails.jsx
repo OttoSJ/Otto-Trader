@@ -65,7 +65,8 @@ function CarDetails() {
           </div>
           <section>
             <h1 className="mt-5 headings">
-              {`${year}  ${make.toUpperCase()}  ${model.toUpperCase()}`}
+              <div className="mb-2"> {`${year} ${make.toUpperCase()} `} </div>
+              <div> {`${model.toUpperCase()}`} </div>
             </h1>
             <hr />
             {/*  */}

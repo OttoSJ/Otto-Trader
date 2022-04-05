@@ -9,6 +9,7 @@ import { upperCase } from "../utilities.js/functions";
 
 function HomePage() {
   const [carData, setCarData] = useState({});
+  const [query, setQuery] = useState("");
 
   const { cars, isLoading, isSuccess, isError, message } = useSelector(
     (state) => state.cars
@@ -32,6 +33,12 @@ function HomePage() {
     dispatch(setData(car));
     navigate("/cardetails");
   };
+  const handleSearch = (e, search) => {
+    e.preventDefault();
+    setQuery(search);
+  };
+
+  const handleFilteredCar = (e, filteredCars) => {};
 
   return (
     <>
@@ -39,6 +46,31 @@ function HomePage() {
         <div className="headings">
           <h1 className="mb-5">Home Page</h1>
         </div>
+        <main>
+          {cars
+            ? cars
+                .filter((filteredCars) => {
+                  if (query === "") {
+                    return cars;
+                  } else if (
+                    filteredCars.make ||
+                    filteredCars.model
+                      .toLowerCase()
+                      .includes(query.toLowerCase())
+                  ) {
+                    return filteredCars;
+                  }
+                })
+                .map((filteredCars) => (
+                  <div
+                    onClick={(e) => handleCarDetails(e, filteredCars)}
+                    key={filteredCars._id}
+                  >
+                    <p className="text mx-5"> {filteredCars.username} </p>
+                  </div>
+                ))
+            : null}
+        </main>
 
         <div className="main-display-container">
           {cars.map((car) => (

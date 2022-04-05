@@ -9,40 +9,49 @@ const carSchema = new mongoose.Schema(
     make: {
       type: String,
       required: [true, "Please add make"],
+      max: 12,
     },
     model: {
       type: String,
       required: [true, "Please add model"],
+      max: 12,
     },
 
     year: {
       type: Number,
       required: [true, "Please use numbers only"],
+      max: 4,
     },
 
     type: {
       type: String,
       required: [true, "Please add type, truck, car.."],
+      max: 5,
     },
     listprice: {
       type: Number,
       required: [true, "Please use numbers only"],
+      max: 6,
     },
     color: {
       type: String,
       required: true,
+      max: 12,
     },
     drivetype: {
       type: String,
       required: false,
+      max: 10,
     },
     engine: {
       type: String,
       required: false,
+      max: 6,
     },
     transmission: {
       type: String,
       required: false,
+      max: 10,
     },
     discription: {
       type: String,
@@ -57,6 +66,7 @@ const carSchema = new mongoose.Schema(
     mileage: {
       type: Number,
       required: [true, "Please add mileage"],
+      max: 6,
     },
     //   Comfort Features
     ac: {
