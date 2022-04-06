@@ -114,7 +114,7 @@ function CarRegistration() {
   return (
     <div>
       <div>
-        <div className="container">
+        <div className="mx-5">
           <h1 className="mt-5 headings">
             {" "}
             <FaCar className="mb-1" /> Register Vehilcle
@@ -260,138 +260,144 @@ function CarRegistration() {
                 onChange={onChange}
               />
             </div>
-            <div className="headings m-4">
+
+            {/*  */}
+            <div className="headings">
               <h2> Additional Options</h2>
             </div>
-            <div className="options-container">
-              <div className="col-md-2">
-                <label htmlFor="ac" className="form-label">
-                  A/C
-                </label>
-                <select
-                  id="ac"
-                  name="ac"
-                  className="form-select"
-                  onChange={onChange}
-                >
-                  {/* <option value="Choose"> {ac ? "Yes" : "No"} </option> */}
-                  <option value="true">Yes </option>
-                  <option value="false">No </option>
-                </select>
-              </div>
-              <div className="col-md-2">
-                <label htmlFor="leatherseats" className="form-label">
-                  Leather Seats
-                </label>
-                <select
-                  id="leatherseats"
-                  name="leatherseats"
-                  className="form-select"
-                  onChange={onChange}
-                >
-                  {/* <option value="Choose"> */}{" "}
-                  {/* {leatherseats ? "Yes" : "No"}{" "} */}
-                  {/* </option> */}
-                  <option value="true">Yes </option>
-                  <option value="false">No </option>
-                </select>
-              </div>
-              <div className="col-md-2">
-                <label htmlFor="sunroof" className="form-label">
-                  Sun Roof
-                </label>
-                <select
-                  id="sunroof"
-                  name="sunroof"
-                  className="form-select"
-                  onChange={onChange}
-                >
-                  {/* <option value="Choose"> {sunroof ? "Yes" : "No"} </option> */}
-                  <option value="true">Yes </option>
-                  <option value="false">No </option>
-                </select>
-              </div>
-              <div className="col-md-2">
-                <label htmlFor="bluetooth" className="form-label">
-                  Bluetooth
-                </label>
-                <select
-                  id="bluetooth"
-                  name="bluetooth"
-                  className="form-select"
-                  onChange={onChange}
-                >
-                  {/* <option value="Choose"> {bluetooth ? "Yes" : "No"} </option> */}
-                  <option value="true">Yes </option>
-                  <option value="false">No </option>
-                </select>
-              </div>
-              <div className="col-md-2">
-                <label htmlFor="cruisecontrol" className="form-label">
-                  Cruise Control
-                </label>
-                <select
-                  id="cruisecontrol"
-                  name="cruisecontrol"
-                  className="form-select"
-                  onChange={onChange}
-                >
-                  {/* <option value="Choose"> */}{" "}
-                  {/* {cruisecontrol ? "Yes" : "No"}{" "} */}
-                  {/* </option> */}
-                  <option value="true">Yes </option>
-                  <option value="false">No </option>
-                </select>
-              </div>
-              <div className="col-md-2 ">
-                <label htmlFor="satradio" className="form-label">
-                  Sat Radio
-                </label>
-                <select
-                  id="satradio"
-                  name="satradio"
-                  className="form-select"
-                  onChange={onChange}
-                >
-                  {/* <option value="Choose"> {satradio ? "Yes" : "No"} </option> */}
-                  <option value="true">Yes </option>
-                  <option value="false">No </option>
-                </select>
-              </div>
-              <div className="col-md-2 ">
-                <label htmlFor="auxport" className="form-label">
-                  Aux Port
-                </label>
-                <select
-                  id="auxport"
-                  name="auxport"
-                  className="form-select"
-                  onChange={onChange}
-                >
-                  {/* <option value="Choose"> {auxport ? "Yes" : "No"} </option> */}
-                  <option value="true">Yes </option>
-                  <option value="false">No </option>
-                </select>
-              </div>
-              <div className="col-md-2">
-                <label htmlFor="amfm" className="form-label">
-                  Am/Fm
-                </label>
-                <select
-                  id="amfm"
-                  name="amfm"
-                  className="form-select"
-                  onChange={onChange}
-                >
-                  {/* <option value="Choose"> {amfm ? "Yes" : "No"} </option> */}
-                  <option value="true">Yes </option>
-                  <option value="false">No </option>
-                </select>
+            <div className="container">
+              <div className="options-container">
+                <div className="col-md-2">
+                  <label htmlFor="ac" className="form-label">
+                    A/C
+                  </label>
+                  <select
+                    id="ac"
+                    name="ac"
+                    className="form-select"
+                    onChange={onChange}
+                  >
+                    <option value="Choose"> {ac ? "Yes" : "No"} </option>
+                    <option value="true">Yes </option>
+                    <option value="false">No </option>
+                  </select>
+                </div>
+                <div className="col-md-2">
+                  <label htmlFor="leatherseats" className="form-label">
+                    Leather
+                  </label>
+                  <select
+                    id="leatherseats"
+                    name="leatherseats"
+                    className="form-select"
+                    onChange={onChange}
+                  >
+                    <option value="Choose">
+                      {" "}
+                      {leatherseats ? "Yes" : "No"}{" "}
+                    </option>
+                    <option value="true">Yes </option>
+                    <option value="false">No </option>
+                  </select>
+                </div>
+                <div className="col-md-2">
+                  <label htmlFor="sunroof" className="form-label">
+                    Sun Roof
+                  </label>
+                  <select
+                    id="sunroof"
+                    name="sunroof"
+                    className="form-select"
+                    onChange={onChange}
+                  >
+                    <option value="Choose"> {sunroof ? "Yes" : "No"} </option>
+                    <option value="true">Yes </option>
+                    <option value="false">No </option>
+                  </select>
+                </div>
+                <div className="col-md-2">
+                  <label htmlFor="bluetooth" className="form-label">
+                    Bluetooth
+                  </label>
+                  <select
+                    id="bluetooth"
+                    name="bluetooth"
+                    className="form-select"
+                    onChange={onChange}
+                  >
+                    <option value="Choose"> {bluetooth ? "Yes" : "No"} </option>
+                    <option value="true">Yes </option>
+                    <option value="false">No </option>
+                  </select>
+                </div>
+                <div className="col-md-2">
+                  <label htmlFor="cruisecontrol" className="form-label">
+                    Cruise Cntl
+                  </label>
+                  <select
+                    id="cruisecontrol"
+                    name="cruisecontrol"
+                    className="form-select"
+                    onChange={onChange}
+                  >
+                    <option value="Choose">
+                      {" "}
+                      {cruisecontrol ? "Yes" : "No"}{" "}
+                    </option>
+                    <option value="true">Yes </option>
+                    <option value="false">No </option>
+                  </select>
+                </div>
+                <div className="col-md-2 ">
+                  <label htmlFor="satradio" className="form-label">
+                    Sat Radio
+                  </label>
+                  <select
+                    id="satradio"
+                    name="satradio"
+                    className="form-select"
+                    onChange={onChange}
+                  >
+                    <option value="Choose"> {satradio ? "Yes" : "No"} </option>
+                    <option value="true">Yes </option>
+                    <option value="false">No </option>
+                  </select>
+                </div>
+                <div className="col-md-2 ">
+                  <label htmlFor="auxport" className="form-label">
+                    Aux Port
+                  </label>
+                  <select
+                    id="auxport"
+                    name="auxport"
+                    className="form-select"
+                    onChange={onChange}
+                  >
+                    <option value="Choose"> {auxport ? "Yes" : "No"} </option>
+                    <option value="true">Yes </option>
+                    <option value="false">No </option>
+                  </select>
+                </div>
+                <div className="col-md-2">
+                  <label htmlFor="amfm" className="form-label">
+                    Am/Fm
+                  </label>
+                  <select
+                    id="amfm"
+                    name="amfm"
+                    className="form-select"
+                    onChange={onChange}
+                  >
+                    <option value="Choose"> {amfm ? "Yes" : "No"} </option>
+                    <option value="true">Yes </option>
+                    <option value="false">No </option>
+                  </select>
+                </div>
               </div>
             </div>
 
-            <div className="col-12 mb-5">
-              <button type="submit" className="btn btn-primary">
+            <div className="col-12 mb-5 container">
+              <button type="submit" className="btn btn-dark col-8 m-3">
                 Submit
               </button>
             </div>

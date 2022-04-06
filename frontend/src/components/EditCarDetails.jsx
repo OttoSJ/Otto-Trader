@@ -264,10 +264,10 @@ function EditCarDetails() {
                 onChange={onChange}
               />
             </div>
+
             <div className="headings">
               <h2> Additional Options</h2>
             </div>
-
             <div className="container">
               <div className="options-container">
                 <div className="col-md-2">

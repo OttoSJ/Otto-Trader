@@ -53,7 +53,7 @@ function SellerDashboard() {
               <main
                 key={car._id}
                 onClick={(e) => handleCarDetails(e, car)}
-                className="main-container mt-3"
+                className="main-container mt-3 mb-2"
               >
                 <img className="main-picture" src={car.image} alt="" />
                 <div className="sellers-main-message-container">

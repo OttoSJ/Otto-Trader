@@ -60,30 +60,38 @@ const carSchema = new mongoose.Schema(
     },
     // Comfort Features
     ac: {
-      type: Boolean,
+      type: String,
+      default: "false",
     },
     leatherseats: {
-      type: Boolean,
+      type: String,
+      default: "false",
     },
     sunroof: {
-      type: Boolean,
+      type: String,
+      default: "false",
     },
     // Tech Features
     bluetooth: {
-      type: Boolean,
+      type: String,
+      default: "false",
     },
     cruisecontrol: {
-      type: Boolean,
+      type: String,
+      default: "false",
     },
     // Entertainment
     satradio: {
-      type: Boolean,
+      type: String,
+      default: "false",
     },
     auxport: {
-      type: Boolean,
+      type: String,
+      default: "false",
     },
     amfm: {
-      type: Boolean,
+      type: String,
+      default: "false",
     },
   },
   { timestamps: true }

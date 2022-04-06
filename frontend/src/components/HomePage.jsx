@@ -85,7 +85,7 @@ function HomePage() {
                   <main
                     key={filteredCars._id}
                     onClick={(e) => handleCarDetails(e, filteredCars)}
-                    className="main-container mt-3"
+                    className="main-container mt-3 mb-2"
                   >
                     <img
                       className="main-picture"
