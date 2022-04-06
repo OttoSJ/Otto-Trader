@@ -54,7 +54,6 @@ function CarRegistration() {
     amfm,
   } = formData;
 
-  console.log(formData);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -74,33 +73,31 @@ function CarRegistration() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!car) {
-      toast.error("Please login or create and account");
-    } else {
-      const carData = {
-        make,
-        model,
-        year,
-        type,
-        listprice,
-        color,
-        drivetype,
-        engine,
-        transmission,
-        discription,
-        image,
-        mileage,
-        ac,
-        leatherseats,
-        sunroof,
-        bluetooth,
-        cruisecontrol,
-        satradio,
-        auxport,
-        amfm,
-      };
-      dispatch(createCar(carData));
-    }
+
+    const carData = {
+      make,
+      model,
+      year,
+      type,
+      listprice,
+      color,
+      drivetype,
+      engine,
+      transmission,
+      discription,
+      image,
+      mileage,
+      ac,
+      leatherseats,
+      sunroof,
+      bluetooth,
+      cruisecontrol,
+      satradio,
+      auxport,
+      amfm,
+    };
+    console.log(carData);
+    dispatch(createCar(carData));
   };
 
   const onChange = (e) => {
@@ -277,7 +274,7 @@ function CarRegistration() {
                   className="form-select"
                   onChange={onChange}
                 >
-                  <option value="Choose">Choose...</option>
+                  {/* <option value="Choose"> {ac ? "Yes" : "No"} </option> */}
                   <option value="true">Yes </option>
                   <option value="false">No </option>
                 </select>
@@ -292,7 +289,9 @@ function CarRegistration() {
                   className="form-select"
                   onChange={onChange}
                 >
-                  <option value="Choose">Choose...</option>
+                  {/* <option value="Choose"> */}{" "}
+                  {/* {leatherseats ? "Yes" : "No"}{" "} */}
+                  {/* </option> */}
                   <option value="true">Yes </option>
                   <option value="false">No </option>
                 </select>
@@ -307,7 +306,7 @@ function CarRegistration() {
                   className="form-select"
                   onChange={onChange}
                 >
-                  <option value="Choose">Choose...</option>
+                  {/* <option value="Choose"> {sunroof ? "Yes" : "No"} </option> */}
                   <option value="true">Yes </option>
                   <option value="false">No </option>
                 </select>
@@ -322,7 +321,7 @@ function CarRegistration() {
                   className="form-select"
                   onChange={onChange}
                 >
-                  <option value="Choose">Choose...</option>
+                  {/* <option value="Choose"> {bluetooth ? "Yes" : "No"} </option> */}
                   <option value="true">Yes </option>
                   <option value="false">No </option>
                 </select>
@@ -337,7 +336,9 @@ function CarRegistration() {
                   className="form-select"
                   onChange={onChange}
                 >
-                  <option value="Choose">Choose...</option>
+                  {/* <option value="Choose"> */}{" "}
+                  {/* {cruisecontrol ? "Yes" : "No"}{" "} */}
+                  {/* </option> */}
                   <option value="true">Yes </option>
                   <option value="false">No </option>
                 </select>
@@ -352,7 +353,7 @@ function CarRegistration() {
                   className="form-select"
                   onChange={onChange}
                 >
-                  <option value="Choose">Choose...</option>
+                  {/* <option value="Choose"> {satradio ? "Yes" : "No"} </option> */}
                   <option value="true">Yes </option>
                   <option value="false">No </option>
                 </select>
@@ -367,7 +368,7 @@ function CarRegistration() {
                   className="form-select"
                   onChange={onChange}
                 >
-                  <option value="Choose">Choose...</option>
+                  {/* <option value="Choose"> {auxport ? "Yes" : "No"} </option> */}
                   <option value="true">Yes </option>
                   <option value="false">No </option>
                 </select>
@@ -382,7 +383,7 @@ function CarRegistration() {
                   className="form-select"
                   onChange={onChange}
                 >
-                  <option value="Choose">Choose...</option>
+                  {/* <option value="Choose"> {amfm ? "Yes" : "No"} </option> */}
                   <option value="true">Yes </option>
                   <option value="false">No </option>
                 </select>

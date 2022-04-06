@@ -8,6 +8,8 @@ import { numberWithCommas } from "../utilities.js/functions";
 import { upperCase } from "../utilities.js/functions";
 import { toast } from "react-toastify";
 
+import { FaCarSide, FaCarAlt } from "react-icons/fa";
+
 function HomePage() {
   const [carData, setCarData] = useState({});
   const [query, setQuery] = useState("");
@@ -44,7 +46,8 @@ function HomePage() {
     <>
       <div className="sellers-page-container">
         <div className="headings">
-          <h1 className="mb-5">Home Page</h1>
+          <h1 className=" styled-header"> Otto Trader</h1>
+          <h4>Find your drive!</h4>
         </div>
         <section>
           <form className="">

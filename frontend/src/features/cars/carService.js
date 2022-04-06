@@ -8,7 +8,10 @@ const createCar = async (carData, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
+  console.log(carData);
+  console.log(config);
   const response = await axios.post(API_URL, carData, config);
+  console.log(response);
   return response.data;
 };
 
@@ -18,8 +21,7 @@ const updateCarDetails = async (carData, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  console.log(carData);
-  console.log(carData._id);
+
   const response = await axios.put(API_URL + carData._id, carData, config);
   return response.data;
 };

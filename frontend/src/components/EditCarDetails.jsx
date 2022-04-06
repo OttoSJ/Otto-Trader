@@ -3,7 +3,11 @@ import { FaCar } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getCars, updateCarDetails } from "../features/cars/carSlice";
+import {
+  getCars,
+  updateCarDetails,
+  deleteCar,
+} from "../features/cars/carSlice";
 import { clearData, setData } from "../features/carDetailsSlice";
 import { upperCase, numberWithCommas } from "../utilities.js/functions";
 import { toast } from "react-toastify";
@@ -104,13 +108,13 @@ function EditCarDetails() {
   return (
     <div>
       <div>
-        <div className="container">
+        <div className="mx-5">
           <h1 className="mt-5 headings">
             {" "}
             <FaCar className="mb-1" /> Edit Vehilcle Details
           </h1>
           <form onSubmit={onSubmit} className="row g-3 mt-3">
-            <div className="col-4">
+            <div className="col-6">
               <label htmlFor="make" className="form-label">
                 Make
               </label>
@@ -125,7 +129,7 @@ function EditCarDetails() {
                 onChange={onChange}
               />
             </div>
-            <div className="col-4">
+            <div className="col-6">
               <label htmlFor="model" className="form-label">
                 Model
               </label>
@@ -140,7 +144,7 @@ function EditCarDetails() {
               />
             </div>
 
-            <div className="col-4">
+            <div className="col-6">
               <label htmlFor="year" className="form-label">
                 Year
               </label>
@@ -153,7 +157,7 @@ function EditCarDetails() {
                 onChange={onChange}
               />
             </div>
-            <div className="col-4">
+            <div className="col-6">
               <label htmlFor="type" className="form-label">
                 Body Type
               </label>
@@ -166,7 +170,7 @@ function EditCarDetails() {
                 onChange={onChange}
               />
             </div>
-            <div className="col-4">
+            <div className="col-6">
               <label htmlFor="listprice" className="form-label">
                 Listprice
               </label>
@@ -179,7 +183,7 @@ function EditCarDetails() {
                 onChange={onChange}
               />
             </div>
-            <div className="col-4">
+            <div className="col-6">
               <label htmlFor="color" className="form-label">
                 Color
               </label>
@@ -192,7 +196,7 @@ function EditCarDetails() {
                 onChange={onChange}
               />
             </div>
-            <div className="col-4">
+            <div className="col-6">
               <label htmlFor="drivetype" className="form-label">
                 Drive Type
               </label>
@@ -207,7 +211,7 @@ function EditCarDetails() {
               />
             </div>
 
-            <div className="col-4">
+            <div className="col-6">
               <label htmlFor="engine" className="form-label">
                 Engine
               </label>
@@ -221,7 +225,7 @@ function EditCarDetails() {
               />
             </div>
 
-            <div className="col-4">
+            <div className="col-6">
               <label htmlFor="transmission" className="form-label">
                 Transmission
               </label>
@@ -234,7 +238,7 @@ function EditCarDetails() {
                 onChange={onChange}
               />
             </div>
-            <div className="col-8">
+            <div className="col-6">
               <label htmlFor="image" className="form-label">
                 Image
               </label>
@@ -247,7 +251,7 @@ function EditCarDetails() {
                 onChange={onChange}
               />
             </div>
-            <div className="col-4">
+            <div className="col-6">
               <label htmlFor="mileage" className="form-label">
                 Mileage
               </label>
@@ -260,8 +264,7 @@ function EditCarDetails() {
                 onChange={onChange}
               />
             </div>
-
-            <div className="headings m-4">
+            <div className="headings">
               <h2> Additional Options</h2>
             </div>
 
@@ -274,27 +277,32 @@ function EditCarDetails() {
                   <select
                     id="ac"
                     name="ac"
-                    className="form-select"
+                    className="form-select select-box-size"
                     onChange={onChange}
+                    defaultValue={ac}
                   >
-                    <option value="Choose">Choose...</option>
+                    <option value="Choose"> {ac ? "Yes" : "No"} </option>
                     <option value="true">Yes </option>
                     <option value="false">No </option>
                   </select>
                 </div>
                 <div className="col-md-2">
                   <label htmlFor="leatherseats" className="form-label">
-                    Leather Seats
+                    Leather
                   </label>
                   <select
                     id="leatherseats"
                     name="leatherseats"
-                    className="form-select"
+                    className="form-select select-box-size"
                     onChange={onChange}
                   >
-                    <option value="Choose">Choose...</option>
-                    <option value="true">Yes </option>
-                    <option value="false">No </option>
+                    <option value="Choose">
+                      {" "}
+                      {leatherseats ? "Yes" : "No"}{" "}
+                    </option>
+
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
                   </select>
                 </div>
                 <div className="col-md-2">
@@ -304,12 +312,13 @@ function EditCarDetails() {
                   <select
                     id="sunroof"
                     name="sunroof"
-                    className="form-select"
+                    className="form-select select-box-size"
                     onChange={onChange}
                   >
-                    <option value="Choose">Choose...</option>
-                    <option value="true">Yes </option>
-                    <option value="false">No </option>
+                    <option value="Choose"> {sunroof ? "Yes" : "No"} </option>
+
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
                   </select>
                 </div>
                 <div className="col-md-2">
@@ -319,10 +328,11 @@ function EditCarDetails() {
                   <select
                     id="bluetooth"
                     name="bluetooth"
-                    className="form-select"
+                    className="form-select select-box-size"
                     onChange={onChange}
                   >
-                    <option value="Choose">Choose...</option>
+                    <option value="Choose"> {bluetooth ? "Yes" : "No"} </option>
+
                     <option value="true">Yes </option>
                     <option value="false">No </option>
                   </select>
@@ -334,10 +344,14 @@ function EditCarDetails() {
                   <select
                     id="cruisecontrol"
                     name="cruisecontrol"
-                    className="form-select"
+                    className="form-select select-box-size"
                     onChange={onChange}
                   >
-                    <option value="Choose">Choose...</option>
+                    <option value="Choose">
+                      {" "}
+                      {cruisecontrol ? "Yes" : "No"}{" "}
+                    </option>
+
                     <option value="true">Yes </option>
                     <option value="false">No </option>
                   </select>
@@ -349,10 +363,11 @@ function EditCarDetails() {
                   <select
                     id="satradio"
                     name="satradio"
-                    className="form-select"
+                    className="form-select select-box-size"
                     onChange={onChange}
                   >
-                    <option value="Choose">Choose...</option>
+                    <option value="Choose"> {satradio ? "Yes" : "No"} </option>
+
                     <option value="true">Yes </option>
                     <option value="false">No </option>
                   </select>
@@ -364,10 +379,11 @@ function EditCarDetails() {
                   <select
                     id="auxport"
                     name="auxport"
-                    className="form-select"
+                    className="form-select select-box-size"
                     onChange={onChange}
                   >
-                    <option value="Choose">Choose...</option>
+                    <option value="Choose"> {auxport ? "Yes" : "No"} </option>
+
                     <option value="true">Yes </option>
                     <option value="false">No </option>
                   </select>
@@ -379,10 +395,10 @@ function EditCarDetails() {
                   <select
                     id="amfm"
                     name="amfm"
-                    className="form-select"
+                    className="form-select select-box-size"
                     onChange={onChange}
                   >
-                    <option value="Choose">Choose...</option>
+                    <option value="Choose"> {amfm ? "Yes" : "No"} </option>
                     <option value="true">Yes </option>
                     <option value="false">No </option>
                   </select>
@@ -390,8 +406,14 @@ function EditCarDetails() {
               </div>
             </div>
 
-            <div className="col-12 mb-5">
-              <button type="submit" className="btn btn-primary">
+            <div className="col-12 mb-5  container">
+              <button
+                onClick={() => dispatch(deleteCar(carDetails._id))}
+                className="btn btn-danger col-5 m-2 "
+              >
+                Delete
+              </button>
+              <button type="submit" className="btn btn-dark col-5 m-2 ">
                 Submit
               </button>
             </div>

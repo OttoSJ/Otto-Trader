@@ -5,10 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { numberWithCommas } from "../utilities.js/functions";
 import { upperCase } from "../utilities.js/functions";
 import { clearData, setData } from "../features/carDetailsSlice";
+import { getCars } from "../features/cars/carSlice";
 
 function CarDetails() {
   const [carData, setCarData] = useState({});
   const { carDetails } = useSelector((state) => state.carDetails);
+  const { cars, isLoading, isError, message } = useSelector(
+    (state) => state.cars
+  );
   // const { user: userId } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,7 +26,12 @@ function CarDetails() {
     localStorage.setItem("cardetails", JSON.stringify(carDetails));
     navigate("/editcardetails");
     console.log(carDetails);
+    console.log(cars);
   };
+
+  useEffect(() => {
+    dispatch(getCars());
+  }, [navigate]);
 
   const {
     color,
