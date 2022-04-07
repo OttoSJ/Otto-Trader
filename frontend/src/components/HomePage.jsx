@@ -49,6 +49,7 @@ function HomePage() {
 
   const paginate = (number) => {
     setCurrentPage(number);
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -95,6 +96,7 @@ function HomePage() {
                 })
                 .slice(indexIfFirstCar, indexOfLastCar)
                 .map((filteredCars) => (
+                  // I need to create a car card component for this main section below
                   <main
                     key={filteredCars._id}
                     onClick={(e) => handleCarDetails(e, filteredCars)}
@@ -116,6 +118,7 @@ function HomePage() {
                       </p>
                     </div>
                   </main>
+                  // I need to create a car card component for this main section above
                 ))
             : null}
         </div>
