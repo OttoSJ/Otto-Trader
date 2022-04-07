@@ -102,6 +102,10 @@ code {
   border-top-right-radius: 8px;
 }
 
+#pagination {
+  /* background-color: red; */
+}
+
 .sellers-page-container {
   width: 100vw;
   height: auto;

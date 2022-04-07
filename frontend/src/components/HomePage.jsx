@@ -7,17 +7,23 @@ import { clearData, setData } from "../features/carDetailsSlice";
 import { numberWithCommas } from "../utilities.js/functions";
 import { upperCase } from "../utilities.js/functions";
 import { toast } from "react-toastify";
+import Pagination from "./Pagintation";
 
 import { FaCarSide, FaCarAlt } from "react-icons/fa";
 
 function HomePage() {
-  const [carData, setCarData] = useState({});
+  const [carDataLength, setCarDataLength] = useState(9);
   const [query, setQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [carsPerPage] = useState(6);
 
   const { cars, isLoading, isSuccess, isError, message } = useSelector(
     (state) => state.cars
   );
   const { user } = useSelector((state) => state.auth);
+  const indexOfLastCar = currentPage * carsPerPage;
+  const indexIfFirstCar = indexOfLastCar - carsPerPage;
+  // const currentCarList = cars.slice(indexIfFirstCar, indexOfLastCar);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,7 +46,10 @@ function HomePage() {
     e.preventDefault();
     setQuery(search);
   };
-  console.log(query);
+
+  const paginate = (number) => {
+    setCurrentPage(number);
+  };
 
   return (
     <>
@@ -72,15 +81,19 @@ function HomePage() {
                       .toLowerCase()
                       .includes(query.toLowerCase())
                   ) {
+                    // setCarDataLength(filteredCars.length);
+
                     return filteredCars;
                   } else if (
                     filteredCars.model
                       .toLowerCase()
                       .includes(query.toLowerCase())
                   ) {
+                    // setCarDataLength(filteredCars.length);
                     return filteredCars;
                   }
                 })
+                .slice(indexIfFirstCar, indexOfLastCar)
                 .map((filteredCars) => (
                   <main
                     key={filteredCars._id}
@@ -106,6 +119,11 @@ function HomePage() {
                 ))
             : null}
         </div>
+        <Pagination
+          paginate={paginate}
+          totalCars={cars.length}
+          carsPerPage={carsPerPage}
+        />
       </div>
     </>
   );

@@ -47,14 +47,14 @@ function Header() {
           {user ? (
             <Nav>
               <Nav.Link href="/sellerdashboard" className="navbar-brand">
-                Seller's Dashboard
+                Dashboard
               </Nav.Link>
             </Nav>
           ) : null}
           {user ? (
             <Nav>
               <Nav.Link href="/carregistration" className="navbar-brand">
-                Register New Vehicle
+                Register Vehicle
               </Nav.Link>
             </Nav>
           ) : null}
