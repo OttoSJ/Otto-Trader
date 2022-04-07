@@ -8,6 +8,7 @@ import { numberWithCommas } from "../utilities.js/functions";
 import { upperCase } from "../utilities.js/functions";
 import { toast } from "react-toastify";
 import Pagination from "./Pagintation";
+import CarCard from "./CarCard";
 
 import { FaCarSide, FaCarAlt } from "react-icons/fa";
 
@@ -83,7 +84,6 @@ function HomePage() {
                       .includes(query.toLowerCase())
                   ) {
                     // setCarDataLength(filteredCars.length);
-
                     return filteredCars;
                   } else if (
                     filteredCars.model
@@ -96,29 +96,11 @@ function HomePage() {
                 })
                 .slice(indexIfFirstCar, indexOfLastCar)
                 .map((filteredCars) => (
-                  // I need to create a car card component for this main section below
-                  <main
+                  <CarCard
                     key={filteredCars._id}
-                    onClick={(e) => handleCarDetails(e, filteredCars)}
-                    className="main-container mt-3 mb-2"
-                  >
-                    <img
-                      className="main-picture"
-                      src={filteredCars.image}
-                      alt=""
-                    />
-                    <div className="sellers-main-message-container">
-                      <p className="m-3">
-                        {filteredCars.year} {upperCase(filteredCars.make)}{" "}
-                        <br /> {upperCase(filteredCars.model)}
-                        <br />{" "}
-                        {`$${numberWithCommas(
-                          filteredCars.listprice
-                        )} / ${numberWithCommas(filteredCars.mileage)}mi`}
-                      </p>
-                    </div>
-                  </main>
-                  // I need to create a car card component for this main section above
+                    filteredCars={filteredCars}
+                    handleCarDetails={handleCarDetails}
+                  />
                 ))
             : null}
         </div>
