@@ -6,7 +6,7 @@ function CarCard({ filteredCars, handleCarDetails }) {
     <>
       <main
         onClick={(e) => handleCarDetails(e, filteredCars)}
-        className="main-container mt-3 mb-2"
+        className="main-container mt-3 mb-2 cursor"
       >
         <img className="main-picture" src={filteredCars.image} alt="" />
         <div className="sellers-main-message-container">

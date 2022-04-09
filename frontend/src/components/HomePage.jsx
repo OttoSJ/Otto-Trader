@@ -39,8 +39,11 @@ function HomePage() {
 
   const handleCarDetails = (e, car) => {
     e.preventDefault();
-    dispatch(setData({ car }));
-    dispatch(setData(car));
+    // dispatch(setData({ car }));
+    // dispatch(setData(car));
+
+    localStorage.removeItem("cardetails");
+    localStorage.setItem("cardetails", JSON.stringify(car));
     navigate("/cardetails");
   };
   const handleSearch = (e, search) => {
@@ -61,10 +64,10 @@ function HomePage() {
           <h4>Find your drive!</h4>
         </div>
         <section>
-          <form className="">
+          <form className=" ">
             <div className="container-centered">
               <input
-                className="search-bar"
+                className="search-bar cursor"
                 type="text"
                 placeholder="   Search by Make or Model"
                 onChange={(e) => handleSearch(e, e.target.value)}
@@ -83,7 +86,7 @@ function HomePage() {
                       .toLowerCase()
                       .includes(query.toLowerCase())
                   ) {
-                    // setCarDataLength(filteredCars.length);
+                    // console.log(filteredCars.make.length);
                     return filteredCars;
                   } else if (
                     filteredCars.model

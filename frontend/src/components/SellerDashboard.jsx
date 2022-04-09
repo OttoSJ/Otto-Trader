@@ -8,7 +8,7 @@ import { numberWithCommas } from "../utilities.js/functions";
 import { upperCase } from "../utilities.js/functions";
 
 function SellerDashboard() {
-  // const [carData, setCarData] = useState({});
+  const [carData, setCarData] = useState({});
 
   const { cars, isLoading, isError, message } = useSelector(
     (state) => state.cars
@@ -34,10 +34,17 @@ function SellerDashboard() {
 
   const handleCarDetails = (e, car) => {
     e.preventDefault();
-    // dispatch(clearData());
+    dispatch(clearData());
     dispatch(setData(car));
-    console.log(car);
+    localStorage.removeItem("cardetails");
+    localStorage.setItem("cardetails", JSON.stringify(car));
     navigate("/cardetails");
+  };
+
+  const handeleEditCarDetails = (e) => {
+    e.preventDefault();
+
+    navigate("/editcardetails");
   };
 
   return (
@@ -50,21 +57,26 @@ function SellerDashboard() {
         <div className="main-display-container">
           {sellersInventory.length > 0 ? (
             sellersInventory.map((car) => (
-              <main
-                key={car._id}
-                onClick={(e) => handleCarDetails(e, car)}
-                className="main-container mt-3 mb-2"
-              >
-                <img className="main-picture" src={car.image} alt="" />
+              <main key={car._id} className="main-container mt-3 mb-2 cursor ">
+                <img
+                  onClick={(e) => handleCarDetails(e, car)}
+                  className="main-picture"
+                  src={car.image}
+                  alt=""
+                />
                 <div className="sellers-main-message-container">
-                  <p className="m-3">
+                  <p className="m-1 mx-3">
                     {car.year} {upperCase(car.make)} <br />{" "}
-                    {upperCase(car.model)}
-                    <br />{" "}
+                    {upperCase(car.model)} <br />{" "}
                     {`$${numberWithCommas(car.listprice)} / ${numberWithCommas(
                       car.mileage
                     )}mi`}
                   </p>
+                  <div className="mb-3 mx-3 ">
+                    <a className="" onClick={(e) => handeleEditCarDetails(e)}>
+                      Edit Car Details
+                    </a>
+                  </div>
                 </div>
               </main>
             ))
@@ -74,11 +86,6 @@ function SellerDashboard() {
             </h6>
           )}
         </div>
-
-        {/* <section className="sellers-card-container">
-          <div className="fake-pic-card"></div>
-          <div className="fake-pic-card"></div>
-        </section> */}
       </div>
     </>
   );

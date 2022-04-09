@@ -8,7 +8,6 @@ import {
   updateCarDetails,
   deleteCar,
 } from "../features/cars/carSlice";
-import { clearData, setData } from "../features/carDetailsSlice";
 import { upperCase, numberWithCommas } from "../utilities.js/functions";
 import { toast } from "react-toastify";
 
@@ -70,8 +69,6 @@ function EditCarDetails() {
   );
   const { user } = useSelector((state) => state.auth);
 
-  // console.log(_id);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -86,8 +83,6 @@ function EditCarDetails() {
     dispatch(getCars());
   }, [user, isSuccess, isError, navigate]);
 
-  // dispatch(setData({ carDetails }));
-
   const onSubmit = (e) => {
     e.preventDefault();
     if (!user) {
@@ -95,7 +90,6 @@ function EditCarDetails() {
     } else {
       navigate("/cardetails");
       dispatch(updateCarDetails(formData));
-      dispatch(setData(formData));
     }
   };
   const onChange = (e) => {
@@ -103,6 +97,12 @@ function EditCarDetails() {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const handleDelete = () => {
+    console.log("clicked");
+    navigate("/sellerdashboard");
+    dispatch(deleteCar(carDetails._id));
   };
 
   return (
@@ -408,7 +408,7 @@ function EditCarDetails() {
 
             <div className="col-12 mb-5  container">
               <button
-                onClick={() => dispatch(deleteCar(carDetails._id))}
+                onClick={() => handleDelete()}
                 className="btn btn-danger col-5 m-2 "
               >
                 Delete

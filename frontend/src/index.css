@@ -23,6 +23,34 @@ code {
   margin: 1rem;
 }
 
+.cursor {
+  cursor: pointer;
+}
+
+a:link {
+  text-decoration: none;
+  font-weight: 600;
+  color: rgb(65, 44, 44);
+}
+
+/* a:visited {
+  text-decoration: none;
+  font-weight: 600;
+  color: red;
+} */
+
+a:hover {
+  text-decoration: none;
+  font-weight: 600;
+  color: dodgerblue;
+}
+
+a {
+  text-decoration: none;
+  font-weight: 600;
+  color: rgb(65, 44, 44);
+}
+
 .mr-auto {
   margin-left: auto;
 }
@@ -100,10 +128,6 @@ code {
   border-bottom-right-radius: 8px; */
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-}
-
-#pagination {
-  /* background-color: red; */
 }
 
 .sellers-page-container {

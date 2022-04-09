@@ -4,30 +4,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { numberWithCommas } from "../utilities.js/functions";
 import { upperCase } from "../utilities.js/functions";
-import { clearData, setData } from "../features/carDetailsSlice";
 import { getCars } from "../features/cars/carSlice";
 
 function CarDetails() {
-  const [carData, setCarData] = useState({});
-  const { carDetails } = useSelector((state) => state.carDetails);
+  const carDetails = JSON.parse(localStorage.getItem("cardetails"));
+  const userId = JSON.parse(localStorage.getItem("user"));
+
   const { cars, isLoading, isError, message } = useSelector(
     (state) => state.cars
   );
-  // const { user: userId } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   console.log(carDetails);
-
-  const handeleEditCarDetails = (e) => {
-    e.preventDefault();
-    dispatch(setData(carDetails));
-    localStorage.removeItem("cardetails");
-    localStorage.setItem("cardetails", JSON.stringify(carDetails));
-    navigate("/editcardetails");
-    console.log(carDetails);
-    console.log(cars);
-  };
 
   useEffect(() => {
     dispatch(getCars());
@@ -58,13 +48,16 @@ function CarDetails() {
     transmission,
   } = carDetails;
 
-  // let carDetailsHeader =
-  //   userId._id === carDetails.user ? "Edit Car Details" : "Car Details";
+  // if (!userId) {
+  //   return "Car Details";
+  // } else if (userId._id === carDetails.user) {
+  //   return "Edit Car Details";
+  // }
 
   return (
     <>
       <div>
-        <div onClick={(e) => handeleEditCarDetails(e)} className="headings">
+        <div className="headings">
           {/* <h1 className="mb-5"> {carDetailsHeader} </h1> */}
           <h1 className="mb-5"> Car Details </h1>
         </div>
@@ -220,8 +213,8 @@ function CarDetails() {
               </div>
             </div>
             <hr />
-            <div className="container-centered mt-4">
-              <p>Comments</p>
+            <div className="container-centered mt-4 mb-5">
+              <p>{comments}</p>
             </div>
           </section>
         </div>
