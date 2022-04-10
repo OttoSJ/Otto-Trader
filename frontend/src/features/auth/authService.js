@@ -12,6 +12,11 @@ const register = async (userData) => {
   return response.data;
 };
 
+// const getAllUsers = async () => {
+//   const response = await axios.get(API_URL + "allUsers");
+//   return response.data;
+// };
+
 const login = async (userData) => {
   const response = await axios.post(API_URL + "login", userData);
   if (response.data) {
@@ -29,6 +34,7 @@ const authService = {
   register,
   login,
   logout,
+  // getAllUsers,
 };
 
 export default authService;

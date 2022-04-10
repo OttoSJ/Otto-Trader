@@ -3,14 +3,11 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getCars } from "../features/cars/carSlice";
-import { clearData, setData } from "../features/carDetailsSlice";
-import { numberWithCommas } from "../utilities.js/functions";
-import { upperCase } from "../utilities.js/functions";
+import { getAllUsers } from "../features/users/usersSlice";
 import { toast } from "react-toastify";
 import Pagination from "./Pagintation";
 import CarCard from "./CarCard";
-
-import { FaCarSide, FaCarAlt } from "react-icons/fa";
+// import Spinner from "../components/Spinner";
 
 function HomePage() {
   const [carDataLength, setCarDataLength] = useState(9);
@@ -22,9 +19,9 @@ function HomePage() {
     (state) => state.cars
   );
   const { user } = useSelector((state) => state.auth);
+  const { allUsers } = useSelector((state) => state.allUsers);
   const indexOfLastCar = currentPage * carsPerPage;
   const indexIfFirstCar = indexOfLastCar - carsPerPage;
-  // const currentCarList = cars.slice(indexIfFirstCar, indexOfLastCar);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,14 +30,12 @@ function HomePage() {
     if (isError) {
       toast.error(message);
     }
-
+    dispatch(getAllUsers());
     dispatch(getCars());
   }, [!user, user, isSuccess, navigate]);
 
   const handleCarDetails = (e, car) => {
     e.preventDefault();
-    // dispatch(setData({ car }));
-    // dispatch(setData(car));
 
     localStorage.removeItem("cardetails");
     localStorage.setItem("cardetails", JSON.stringify(car));
@@ -86,14 +81,12 @@ function HomePage() {
                       .toLowerCase()
                       .includes(query.toLowerCase())
                   ) {
-                    // console.log(filteredCars.make.length);
                     return filteredCars;
                   } else if (
                     filteredCars.model
                       .toLowerCase()
                       .includes(query.toLowerCase())
                   ) {
-                    // setCarDataLength(filteredCars.length);
                     return filteredCars;
                   }
                 })

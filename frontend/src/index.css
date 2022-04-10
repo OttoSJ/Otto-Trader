@@ -67,6 +67,11 @@ a {
   justify-content: center;
   align-items: center;
 }
+
+.minus-margin {
+  margin: -0.1rem;
+}
+
 .container {
   display: flex;
   /* flex-direction: column; */
@@ -219,5 +224,9 @@ a {
 
   .styled-header {
     font-size: 420%;
+  }
+
+  .minus-margin {
+    margin: 0.5rem;
   }
 }

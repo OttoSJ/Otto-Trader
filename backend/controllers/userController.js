@@ -83,7 +83,8 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const getUser = asyncHandler(async (req, res) => {
-  res.status(200).json("Message: Get User");
+  const allUsers = await User.find();
+  res.status(200).json(allUsers);
 });
 
 const generateToken = (id) => {

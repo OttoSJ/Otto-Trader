@@ -81,7 +81,7 @@ function EditCarDetails() {
     }
 
     dispatch(getCars());
-  }, [user, isSuccess, isError, navigate]);
+  }, [user, isSuccess, isError, navigate, isLoading]);
 
   const onSubmit = (e) => {
     e.preventDefault();

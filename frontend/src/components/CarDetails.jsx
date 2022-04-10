@@ -5,11 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { numberWithCommas } from "../utilities.js/functions";
 import { upperCase } from "../utilities.js/functions";
 import { getCars } from "../features/cars/carSlice";
+import { getAllUsers } from "../features/users/usersSlice";
+import Spinner from "../components/Spinner";
 
 function CarDetails() {
   const carDetails = JSON.parse(localStorage.getItem("cardetails"));
   const userId = JSON.parse(localStorage.getItem("user"));
 
+  const { allUsers } = useSelector((state) => state.allUsers);
   const { cars, isLoading, isError, message } = useSelector(
     (state) => state.cars
   );
@@ -17,10 +20,10 @@ function CarDetails() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log(carDetails);
-
   useEffect(() => {
     dispatch(getCars());
+    dispatch(getAllUsers());
+    window.scrollTo(0, 0);
   }, [navigate]);
 
   const {
@@ -48,22 +51,38 @@ function CarDetails() {
     transmission,
   } = carDetails;
 
-  // if (!userId) {
-  //   return "Car Details";
-  // } else if (userId._id === carDetails.user) {
-  //   return "Edit Car Details";
+  // const getUserInfo = async () => {
+  //   const owner = await allUsers.filter(
+  //     (ownerDetails) => ownerDetails._id === carDetails.user
+  //   );
+  //   return owner
   // }
+  // getUserInfo()
+
+  const owner = allUsers.filter(
+    (ownerDetails) => ownerDetails._id === carDetails.user
+  );
+  const { firstname, lastname, email } = owner[0];
+  console.log(owner);
+  console.log(carDetails);
+  console.log(carDetails.user);
+  console.log(allUsers);
 
   return (
     <>
-      <div>
+      <div className="mx-4">
         <div className="headings">
-          {/* <h1 className="mb-5"> {carDetailsHeader} </h1> */}
-          <h1 className="mb-5"> Car Details </h1>
+          <h1 className="mb-2"> Car Details </h1>
+        </div>
+        <div className="container">
+          {" "}
+          <p className="minus-margin">Seller: {`${firstname} ${lastname}`}</p>
+          <p className="minus-margin">Email: {`${email}`} </p>
+          <p className="minus-margin">Phone: (555) 555-5534 </p>
         </div>
         <div className="container-centered">
           <div className=" container-centered-start">
-            <img className="car-details-image" src={image} alt="" />
+            <img className="car-details-image mt-3" src={image} alt="" />
           </div>
           <section>
             <h1 className="mt-5 headings">

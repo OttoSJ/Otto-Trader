@@ -18,7 +18,7 @@ function Header() {
   return (
     <>
       <Navbar expand="lg" className=" bg-dark navbar-dark p-3 ">
-        <Navbar.Brand href="/" className="mx-1 mb-1">
+        <Navbar.Brand href="/" className="mb-1">
           Otto Trader
         </Navbar.Brand>
 
