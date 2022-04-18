@@ -1,30 +1,44 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { numberWithCommas } from "../utilities.js/functions";
-import { upperCase } from "../utilities.js/functions";
-import { getCars } from "../features/cars/carSlice";
-import { getAllUsers } from "../features/users/usersSlice";
-import Spinner from "../components/Spinner";
+import React from 'react'
+import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
+import { numberWithCommas } from '../utilities.js/functions'
+import { upperCase } from '../utilities.js/functions'
+import { getCars } from '../features/cars/carSlice'
+import { getAllUsers } from '../features/users/usersSlice'
+import { getOneCarById, reset } from '../features/carDetails/carDetailsSlice'
+import Spinner from '../components/Spinner'
 
 function CarDetails() {
-  const carDetails = JSON.parse(localStorage.getItem("cardetails"));
-  const userId = JSON.parse(localStorage.getItem("user"));
+  const [carDetail, setCarDetail] = useState([])
 
-  const { allUsers } = useSelector((state) => state.allUsers);
-  const { cars, isLoading, isError, message } = useSelector(
-    (state) => state.cars
-  );
+  const { allUsers } = useSelector((state) => state.allUsers)
+  const { carDetails: carInfo, isSuccess } = useSelector(
+    (state) => state.carDetails
+  )
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const params = useParams()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  console.log(params.id)
+  // console.log(carInfo);
+  // console.log(carInfo.model);
 
   useEffect(() => {
-    dispatch(getCars());
-    dispatch(getAllUsers());
-    window.scrollTo(0, 0);
-  }, [navigate]);
+    const API_URL = `/api/inventory/cardetails/${params.id}`
+    const fetchData = async () => {
+      const response = await fetch(API_URL)
+      const resData = await response.json()
+      setCarDetail(resData)
+    }
+    fetchData()
+    // console.log(carDetail.user)
+
+    getOneCarById(params._id)
+    dispatch(getAllUsers())
+    window.scrollTo(0, 0)
+  }, [isSuccess, navigate])
 
   const {
     color,
@@ -42,31 +56,18 @@ function CarDetails() {
     auxport,
     bluetooth,
     comments,
-    createdAt,
     cruisecontrol,
     drivetype,
     leatherseats,
     satradio,
     sunroof,
     transmission,
-  } = carDetails;
-
-  // const getUserInfo = async () => {
-  //   const owner = await allUsers.filter(
-  //     (ownerDetails) => ownerDetails._id === carDetails.user
-  //   );
-  //   return owner
-  // }
-  // getUserInfo()
+  } = carInfo
 
   const owner = allUsers.filter(
-    (ownerDetails) => ownerDetails._id === carDetails.user
-  );
-  const { firstname, lastname, email } = owner[0];
-  console.log(owner);
-  console.log(carDetails);
-  console.log(carDetails.user);
-  console.log(allUsers);
+    (ownerDetails) => ownerDetails._id === carInfo.user
+  )
+  const { firstname, lastname, email } = owner[0]
 
   return (
     <>
@@ -75,10 +76,14 @@ function CarDetails() {
           <h1 className="mb-2"> Car Details </h1>
         </div>
         <div className="container">
-          {" "}
-          <p className="minus-margin">Seller: {`${firstname} ${lastname}`}</p>
-          <p className="minus-margin">Email: {`${email}`} </p>
-          <p className="minus-margin">Phone: (555) 555-5534 </p>
+          {' '}
+          {!owner ? null : (
+            <p className="minus-margin">Seller: {`${firstname} ${lastname}`}</p>
+          )}
+          {!owner ? null : <p className="minus-margin">Email: {`${email}`} </p>}
+          {!owner ? null : (
+            <p className="minus-margin">Phone: (555) 555-5534 </p>
+          )}
         </div>
         <div className="container-centered">
           <div className=" container-centered-start">
@@ -114,7 +119,7 @@ function CarDetails() {
                 <p>Engine Type</p>
               </div>
               <div>
-                <p> {engine ? upperCase(engine) : "N/A"} </p>
+                <p> {engine ? upperCase(engine) : 'N/A'} </p>
               </div>
             </div>
             <hr />
@@ -132,7 +137,7 @@ function CarDetails() {
                 <p>Transmission</p>
               </div>
               <div>
-                <p>{drivetype ? upperCase(drivetype) : "N/A"} </p>
+                <p>{drivetype ? upperCase(drivetype) : 'N/A'} </p>
               </div>
             </div>
             <hr />
@@ -141,7 +146,7 @@ function CarDetails() {
                 <p>Vehicle Type</p>
               </div>
               <div>
-                <p>{type ? upperCase(type) : "N/A"} </p>
+                <p>{type ? upperCase(type) : 'N/A'} </p>
               </div>
             </div>
             <hr />
@@ -152,7 +157,7 @@ function CarDetails() {
                 <p>Drive Train</p>
               </div>
               <div>
-                <p>{transmission ? upperCase(transmission) : "N/A"} </p>
+                <p>{transmission ? upperCase(transmission) : 'N/A'} </p>
               </div>
             </div>
             <hr />
@@ -165,7 +170,7 @@ function CarDetails() {
                 <p>A/C</p>
               </div>
               <div>
-                <p>{ac ? "Included" : "N/A"}</p>
+                <p>{ac ? 'Included' : 'N/A'}</p>
               </div>
             </div>
             <hr />
@@ -174,7 +179,7 @@ function CarDetails() {
                 <p>AM/FM</p>
               </div>
               <div>
-                <p>{amfm ? "Included" : "N/A"}</p>
+                <p>{amfm ? 'Included' : 'N/A'}</p>
               </div>
             </div>
             <hr />
@@ -183,7 +188,7 @@ function CarDetails() {
                 <p>AUX PORT</p>
               </div>
               <div>
-                <p>{auxport ? "Included" : "N/A"}</p>
+                <p>{auxport ? 'Included' : 'N/A'}</p>
               </div>
             </div>
             <hr />
@@ -192,7 +197,7 @@ function CarDetails() {
                 <p>Blue Tooth</p>
               </div>
               <div>
-                <p>{bluetooth ? "Included" : "N/A"}</p>
+                <p>{bluetooth ? 'Included' : 'N/A'}</p>
               </div>
             </div>
             <hr />
@@ -201,7 +206,7 @@ function CarDetails() {
                 <p>Cruise Control</p>
               </div>
               <div>
-                <p>{cruisecontrol ? "Included" : "N/A"}</p>
+                <p>{cruisecontrol ? 'Included' : 'N/A'}</p>
               </div>
             </div>
             <hr />
@@ -210,7 +215,7 @@ function CarDetails() {
                 <p>Leater Seats</p>
               </div>
               <div>
-                <p>{leatherseats ? "Included" : "N/A"}</p>
+                <p>{leatherseats ? 'Included' : 'N/A'}</p>
               </div>
             </div>
             <hr />
@@ -219,7 +224,7 @@ function CarDetails() {
                 <p>Sat Radio</p>
               </div>
               <div>
-                <p>{satradio ? "Included" : "N/A"}</p>
+                <p>{satradio ? 'Included' : 'N/A'}</p>
               </div>
             </div>
             <hr />
@@ -228,7 +233,7 @@ function CarDetails() {
                 <p>Sun Roof</p>
               </div>
               <div>
-                <p>{sunroof ? "Included" : "N/A"}</p>
+                <p>{sunroof ? 'Included' : 'N/A'}</p>
               </div>
             </div>
             <hr />
@@ -239,7 +244,7 @@ function CarDetails() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default CarDetails;
+export default CarDetails

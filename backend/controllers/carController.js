@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const res = require("express/lib/response");
+
 const Car = require("../models/carModel");
 const User = require("../models/userModel");
 

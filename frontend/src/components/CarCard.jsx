@@ -1,7 +1,9 @@
-import React from "react";
-import { upperCase, numberWithCommas } from "../utilities.js/functions";
+import React from 'react'
+import { upperCase, numberWithCommas } from '../utilities.js/functions'
+import { useNavigate, Link } from 'react-router-dom'
 
 function CarCard({ filteredCars, handleCarDetails }) {
+  // console.log(filteredCars);
   return (
     <>
       <main
@@ -10,18 +12,20 @@ function CarCard({ filteredCars, handleCarDetails }) {
       >
         <img className="main-picture" src={filteredCars.image} alt="" />
         <div className="sellers-main-message-container">
-          <p className="m-3">
-            {filteredCars.year} {upperCase(filteredCars.make)} <br />{" "}
-            {upperCase(filteredCars.model)}
-            <br />{" "}
-            {`$${numberWithCommas(filteredCars.listprice)} / ${numberWithCommas(
-              filteredCars.mileage
-            )}mi`}
-          </p>
+          <Link to={`/cardetails/${filteredCars._id}`}>
+            <p className="m-3">
+              {filteredCars.year} {upperCase(filteredCars.make)} <br />{' '}
+              {upperCase(filteredCars.model)}
+              <br />{' '}
+              {`$${numberWithCommas(
+                filteredCars.listprice
+              )} / ${numberWithCommas(filteredCars.mileage)}mi`}
+            </p>
+          </Link>
         </div>
       </main>
     </>
-  );
+  )
 }
 
-export default CarCard;
+export default CarCard

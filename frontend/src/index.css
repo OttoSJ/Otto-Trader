@@ -126,7 +126,8 @@ a {
   align-items: center;
 }
 
-.main-picture {
+.main-picture,
+Link {
   height: 70%;
   object-fit: fill;
   /* border-bottom-left-radius: 8px;

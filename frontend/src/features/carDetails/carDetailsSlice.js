@@ -10,7 +10,7 @@ const initialState = {
 };
 
 export const getOneCarById = createAsyncThunk(
-  "cars/getAll",
+  "cars/getOneCar",
   async (carId, thunkAPI) => {
     try {
       return await carDetailsService.getOneCarById(carId);
@@ -48,12 +48,5 @@ export const carDetailsSlice = createSlice({
   },
 });
 
-// setData: (state, action) => {
-//   return { carDetails: action.payload };
-// },
-// clearData: () => {
-//   return initialState;
-// },
-// },
 export const { reset } = carDetailsSlice.actions;
 export default carDetailsSlice.reducer;

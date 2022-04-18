@@ -11,7 +11,7 @@ const {
 const { protect } = require("../middleware/authMiddleware");
 
 router.get("/", getCars);
-router.get("/:id", protect, getOneCar);
+router.get("/cardetails/:id", getOneCar);
 router.post("/", protect, setCar);
 router.put("/:id", protect, updateCar);
 router.delete("/:id", protect, deleteCar);

@@ -16,12 +16,13 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route />
+          <Route path="/" element={<HomePage />}></Route>
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/sellerdashboard" element={<SellerDashboard />} />
           <Route path="/carregistration" element={<CarRegistration />} />
-          <Route path="/cardetails" element={<CarDetails />} />
+          <Route path="/cardetails/:id" element={<CarDetails />} />
           <Route path="/editcardetails" element={<EditCarDetails />} />
         </Routes>
       </Router>
