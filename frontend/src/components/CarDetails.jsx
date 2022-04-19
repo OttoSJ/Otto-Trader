@@ -1,44 +1,44 @@
-import React from 'react'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { numberWithCommas } from '../utilities.js/functions'
 import { upperCase } from '../utilities.js/functions'
 import { getCars } from '../features/cars/carSlice'
 import { getAllUsers } from '../features/users/usersSlice'
-import { getOneCarById, reset } from '../features/carDetails/carDetailsSlice'
-import Spinner from '../components/Spinner'
+import { getOneCarById } from '../features/carDetails/carDetailsSlice'
 
 function CarDetails() {
   const [carDetail, setCarDetail] = useState([])
 
   const { allUsers } = useSelector((state) => state.allUsers)
-  const { carDetails: carInfo, isSuccess } = useSelector(
-    (state) => state.carDetails
-  )
+  // const { carDetails: carInfo, isSuccess } = useSelector(
+  //   (state) => state.carDetails
+  // )
 
   const params = useParams()
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   console.log(params.id)
-  // console.log(carInfo);
-  // console.log(carInfo.model);
+
+  const API_URL = `/api/inventory/cardetails/${params.id}`
 
   useEffect(() => {
-    const API_URL = `/api/inventory/cardetails/${params.id}`
     const fetchData = async () => {
       const response = await fetch(API_URL)
       const resData = await response.json()
+      console.log(resData)
       setCarDetail(resData)
     }
-    fetchData()
-    // console.log(carDetail.user)
 
-    getOneCarById(params._id)
+    fetchData()
+
+    dispatch(getCars())
+    dispatch(getOneCarById(params._id))
     dispatch(getAllUsers())
     window.scrollTo(0, 0)
-  }, [isSuccess, navigate])
+  }, [params._id, API_URL, dispatch])
+
+  console.log(carDetail)
 
   const {
     color,
@@ -62,12 +62,185 @@ function CarDetails() {
     satradio,
     sunroof,
     transmission,
-  } = carInfo
+  } = carDetail
 
-  const owner = allUsers.filter(
-    (ownerDetails) => ownerDetails._id === carInfo.user
-  )
-  const { firstname, lastname, email } = owner[0]
+  const owner = allUsers.filter((ownerDetails) => ownerDetails._id === user)
+  // const { firstname, lastname, email } = owner[0]
+
+  console.log(owner)
+  const carInfo = () => {
+    return (
+      <div className="container-centered">
+        <div className=" container-centered-start">
+          <img
+            className="car-details-image mt-3"
+            src={carDetail.image}
+            alt=""
+          />
+        </div>
+        <section>
+          <h1 className="mt-5 headings">
+            <div className="mb-2">
+              {' '}
+              {`${carDetail.year} ${carDetail.make.toUpperCase()} `}{' '}
+            </div>
+            <div> {`${carDetail.model.toUpperCase()}`} </div>
+          </h1>
+          <hr />
+
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>List Price</p>
+            </div>
+            <div>
+              <p>{`$${numberWithCommas(carDetail.listprice.toFixed(2))}`} </p>
+            </div>
+          </div>
+          <hr />
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>Mileage</p>
+            </div>
+            <div>
+              <p>{`${numberWithCommas(carDetail.mileage)} `} </p>
+            </div>
+          </div>
+          <hr />
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>Engine Type</p>
+            </div>
+            <div>
+              <p> {carDetail.engine ? upperCase(carDetail.engine) : 'N/A'} </p>
+            </div>
+          </div>
+          <hr />
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>Exterior Color</p>
+            </div>
+            <div>
+              <p>{upperCase(carDetail.color)}</p>
+            </div>
+          </div>
+          <hr />
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>Transmission</p>
+            </div>
+            <div>
+              <p>
+                {carDetail.drivetype ? upperCase(carDetail.drivetype) : 'N/A'}{' '}
+              </p>
+            </div>
+          </div>
+          <hr />
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>Vehicle Type</p>
+            </div>
+            <div>
+              <p>{carDetail.type ? upperCase(carDetail.type) : 'N/A'} </p>
+            </div>
+          </div>
+          <hr />
+
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>Drive Train</p>
+            </div>
+            <div>
+              <p>
+                {carDetail.transmission
+                  ? upperCase(carDetail.transmission)
+                  : 'N/A'}{' '}
+              </p>
+            </div>
+          </div>
+          <hr />
+          <div>
+            <h1 className="headings mb-5 mt-5 mr-auto">LUXURY OPTIONS</h1>
+          </div>
+          <hr />
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>A/C</p>
+            </div>
+            <div>
+              <p>{carDetail.ac ? 'Included' : 'N/A'}</p>
+            </div>
+          </div>
+          <hr />
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>AM/FM</p>
+            </div>
+            <div>
+              <p>{carDetail.amfm ? 'Included' : 'N/A'}</p>
+            </div>
+          </div>
+          <hr />
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>AUX PORT</p>
+            </div>
+            <div>
+              <p>{carDetail.auxport ? 'Included' : 'N/A'}</p>
+            </div>
+          </div>
+          <hr />
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>Blue Tooth</p>
+            </div>
+            <div>
+              <p>{carDetail.bluetooth ? 'Included' : 'N/A'}</p>
+            </div>
+          </div>
+          <hr />
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>Cruise Control</p>
+            </div>
+            <div>
+              <p>{carDetail.cruisecontrol ? 'Included' : 'N/A'}</p>
+            </div>
+          </div>
+          <hr />
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>Leater Seats</p>
+            </div>
+            <div>
+              <p>{carDetail.leatherseats ? 'Included' : 'N/A'}</p>
+            </div>
+          </div>
+          <hr />
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>Sat Radio</p>
+            </div>
+            <div>
+              <p>{carDetail.satradio ? 'Included' : 'N/A'}</p>
+            </div>
+          </div>
+          <hr />
+          <div className="container-flex-row mt-4">
+            <div>
+              <p>Sun Roof</p>
+            </div>
+            <div>
+              <p>{carDetail.sunroof ? 'Included' : 'N/A'}</p>
+            </div>
+          </div>
+          <hr />
+          <div className="container-centered mt-4 mb-5">
+            <p>{carDetail.comments}</p>
+          </div>
+        </section>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -77,171 +250,25 @@ function CarDetails() {
         </div>
         <div className="container">
           {' '}
-          {!owner ? null : (
-            <p className="minus-margin">Seller: {`${firstname} ${lastname}`}</p>
+          {!owner ? (
+            <p> Loading...</p>
+          ) : (
+            <p className="minus-margin">
+              Seller: {`${carDetail.firstname} ${carDetail.lastname}`}
+            </p>
           )}
-          {!owner ? null : <p className="minus-margin">Email: {`${email}`} </p>}
-          {!owner ? null : (
+          {!owner ? (
+            <p> Loading...</p>
+          ) : (
+            <p className="minus-margin">Email: {`${carDetail.email}`} </p>
+          )}
+          {!owner ? (
+            <p> Loading...</p>
+          ) : (
             <p className="minus-margin">Phone: (555) 555-5534 </p>
           )}
         </div>
-        <div className="container-centered">
-          <div className=" container-centered-start">
-            <img className="car-details-image mt-3" src={image} alt="" />
-          </div>
-          <section>
-            <h1 className="mt-5 headings">
-              <div className="mb-2"> {`${year} ${make.toUpperCase()} `} </div>
-              <div> {`${model.toUpperCase()}`} </div>
-            </h1>
-            <hr />
-            {/*  */}
-            <div className="container-flex-row mt-4">
-              <div>
-                <p>List Price</p>
-              </div>
-              <div>
-                <p>{`$${numberWithCommas(listprice.toFixed(2))}`} </p>
-              </div>
-            </div>
-            <hr />
-            <div className="container-flex-row mt-4">
-              <div>
-                <p>Mileage</p>
-              </div>
-              <div>
-                <p>{`${numberWithCommas(mileage)} `} </p>
-              </div>
-            </div>
-            <hr />
-            <div className="container-flex-row mt-4">
-              <div>
-                <p>Engine Type</p>
-              </div>
-              <div>
-                <p> {engine ? upperCase(engine) : 'N/A'} </p>
-              </div>
-            </div>
-            <hr />
-            <div className="container-flex-row mt-4">
-              <div>
-                <p>Exterior Color</p>
-              </div>
-              <div>
-                <p>{upperCase(color)}</p>
-              </div>
-            </div>
-            <hr />
-            <div className="container-flex-row mt-4">
-              <div>
-                <p>Transmission</p>
-              </div>
-              <div>
-                <p>{drivetype ? upperCase(drivetype) : 'N/A'} </p>
-              </div>
-            </div>
-            <hr />
-            <div className="container-flex-row mt-4">
-              <div>
-                <p>Vehicle Type</p>
-              </div>
-              <div>
-                <p>{type ? upperCase(type) : 'N/A'} </p>
-              </div>
-            </div>
-            <hr />
-
-            {/*  */}
-            <div className="container-flex-row mt-4">
-              <div>
-                <p>Drive Train</p>
-              </div>
-              <div>
-                <p>{transmission ? upperCase(transmission) : 'N/A'} </p>
-              </div>
-            </div>
-            <hr />
-            <div>
-              <h1 className="headings mb-5 mt-5 mr-auto">LUXURY OPTIONS</h1>
-            </div>
-            <hr />
-            <div className="container-flex-row mt-4">
-              <div>
-                <p>A/C</p>
-              </div>
-              <div>
-                <p>{ac ? 'Included' : 'N/A'}</p>
-              </div>
-            </div>
-            <hr />
-            <div className="container-flex-row mt-4">
-              <div>
-                <p>AM/FM</p>
-              </div>
-              <div>
-                <p>{amfm ? 'Included' : 'N/A'}</p>
-              </div>
-            </div>
-            <hr />
-            <div className="container-flex-row mt-4">
-              <div>
-                <p>AUX PORT</p>
-              </div>
-              <div>
-                <p>{auxport ? 'Included' : 'N/A'}</p>
-              </div>
-            </div>
-            <hr />
-            <div className="container-flex-row mt-4">
-              <div>
-                <p>Blue Tooth</p>
-              </div>
-              <div>
-                <p>{bluetooth ? 'Included' : 'N/A'}</p>
-              </div>
-            </div>
-            <hr />
-            <div className="container-flex-row mt-4">
-              <div>
-                <p>Cruise Control</p>
-              </div>
-              <div>
-                <p>{cruisecontrol ? 'Included' : 'N/A'}</p>
-              </div>
-            </div>
-            <hr />
-            <div className="container-flex-row mt-4">
-              <div>
-                <p>Leater Seats</p>
-              </div>
-              <div>
-                <p>{leatherseats ? 'Included' : 'N/A'}</p>
-              </div>
-            </div>
-            <hr />
-            <div className="container-flex-row mt-4">
-              <div>
-                <p>Sat Radio</p>
-              </div>
-              <div>
-                <p>{satradio ? 'Included' : 'N/A'}</p>
-              </div>
-            </div>
-            <hr />
-            <div className="container-flex-row mt-4">
-              <div>
-                <p>Sun Roof</p>
-              </div>
-              <div>
-                <p>{sunroof ? 'Included' : 'N/A'}</p>
-              </div>
-            </div>
-            <hr />
-            <div className="container-centered mt-4 mb-5">
-              <p>{comments}</p>
-            </div>
-          </section>
-        </div>
+        {carDetail ? carInfo() : <p>Loading</p>}
       </div>
     </>
   )

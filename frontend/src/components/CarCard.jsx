@@ -1,28 +1,29 @@
 import React from 'react'
 import { upperCase, numberWithCommas } from '../utilities.js/functions'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function CarCard({ filteredCars, handleCarDetails }) {
   // console.log(filteredCars);
   return (
     <>
       <main
-        onClick={(e) => handleCarDetails(e, filteredCars)}
+        // onClick={(e) => handleCarDetails(e, filteredCars)}
         className="main-container mt-3 mb-2 cursor"
       >
         <img className="main-picture" src={filteredCars.image} alt="" />
-        <div className="sellers-main-message-container">
-          <Link to={`/cardetails/${filteredCars._id}`}>
-            <p className="m-3">
-              {filteredCars.year} {upperCase(filteredCars.make)} <br />{' '}
-              {upperCase(filteredCars.model)}
-              <br />{' '}
-              {`$${numberWithCommas(
-                filteredCars.listprice
-              )} / ${numberWithCommas(filteredCars.mileage)}mi`}
-            </p>
-          </Link>
-        </div>
+        <Link
+          className="sellers-main-message-container"
+          to={`/cardetails/${filteredCars._id}`}
+        >
+          <p className="m-3">
+            {filteredCars.year} {upperCase(filteredCars.make)} <br />{' '}
+            {upperCase(filteredCars.model)}
+            <br />{' '}
+            {`$${numberWithCommas(filteredCars.listprice)} / ${numberWithCommas(
+              filteredCars.mileage
+            )}mi`}
+          </p>
+        </Link>
       </main>
     </>
   )

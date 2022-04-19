@@ -1,40 +1,24 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { getCars } from '../features/cars/carSlice'
-import { getAllUsers } from '../features/users/usersSlice'
-import { toast } from 'react-toastify'
 import Pagination from './Pagintation'
 import CarCard from './CarCard'
 import { getOneCarById } from '../features/carDetails/carDetailsSlice'
-// import Spinner from "../components/Spinner";
 
-function HomePage() {
-  const [carDataLength, setCarDataLength] = useState(9)
+function HomePage({ data }) {
+  // const [carDataLength, setCarDataLength] = useState(9)
   const [query, setQuery] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [carsPerPage] = useState(6)
 
-  const { cars, isLoading, isSuccess, isError, message } = useSelector(
-    (state) => state.cars
-  )
-  const { user } = useSelector((state) => state.auth)
-  const { allUsers } = useSelector((state) => state.allUsers)
   const indexOfLastCar = currentPage * carsPerPage
   const indexIfFirstCar = indexOfLastCar - carsPerPage
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (isError) {
-      toast.error(message)
-    }
-
-    dispatch(getAllUsers())
-    dispatch(getCars())
-  }, [!user, user, isSuccess, navigate])
+  console.log(data)
 
   const handleCarDetails = (e, car) => {
     e.preventDefault()
@@ -51,7 +35,6 @@ function HomePage() {
     }
 
     fetchData()
-    setTimeout(navigate(`/cardetails/${car._id}`), 2000)
   }
 
   const handleSearch = (e, search) => {
@@ -84,11 +67,11 @@ function HomePage() {
           </form>
         </section>
         <div className="main-display-container">
-          {cars
-            ? cars
+          {data
+            ? data
                 .filter((filteredCars) => {
                   if (query === '') {
-                    return cars
+                    return data
                   } else if (
                     filteredCars.make
                       .toLowerCase()
@@ -102,6 +85,7 @@ function HomePage() {
                   ) {
                     return filteredCars
                   }
+                  return filteredCars
                 })
                 .slice(indexIfFirstCar, indexOfLastCar)
                 .map((filteredCars) => (
@@ -115,7 +99,7 @@ function HomePage() {
         </div>
         <Pagination
           paginate={paginate}
-          totalCars={cars.length}
+          totalCars={data.length}
           carsPerPage={carsPerPage}
         />
       </div>
