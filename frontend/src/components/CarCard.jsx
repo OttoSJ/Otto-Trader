@@ -3,7 +3,7 @@ import { upperCase, numberWithCommas } from '../utilities.js/functions'
 import { Link } from 'react-router-dom'
 
 function CarCard({ filteredCars, handleCarDetails }) {
-  // console.log(filteredCars);
+  // console.log(filteredCars)
   return (
     <>
       <main

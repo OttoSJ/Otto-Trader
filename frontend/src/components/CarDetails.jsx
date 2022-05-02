@@ -6,21 +6,18 @@ import { upperCase } from '../utilities.js/functions'
 import { getCars } from '../features/cars/carSlice'
 import { getAllUsers } from '../features/users/usersSlice'
 import { getOneCarById } from '../features/carDetails/carDetailsSlice'
+import Spinner from './Spinner'
 
 function CarDetails() {
-  const [carDetail, setCarDetail] = useState([])
+  const [carDetail, setCarDetail] = useState('')
 
   const { allUsers } = useSelector((state) => state.allUsers)
-  // const { carDetails: carInfo, isSuccess } = useSelector(
-  //   (state) => state.carDetails
-  // )
 
   const params = useParams()
   const dispatch = useDispatch()
 
-  console.log(params.id)
-
   const API_URL = `/api/inventory/cardetails/${params.id}`
+  console.log(params)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,8 +34,6 @@ function CarDetails() {
     dispatch(getAllUsers())
     window.scrollTo(0, 0)
   }, [params._id, API_URL, dispatch])
-
-  console.log(carDetail)
 
   const {
     color,
@@ -64,182 +59,217 @@ function CarDetails() {
     transmission,
   } = carDetail
 
-  const owner = allUsers.filter((ownerDetails) => ownerDetails._id === user)
-  // const { firstname, lastname, email } = owner[0]
+  if (!allUsers) {
+    return <Spinner />
+  }
 
-  console.log(owner)
-  const carInfo = () => {
-    return (
-      <div className="container-centered">
-        <div className=" container-centered-start">
-          <img
-            className="car-details-image mt-3"
-            src={carDetail.image}
-            alt=""
-          />
+  const ownerInfo = () => {
+    const owner = allUsers.filter((ownerDetails) => ownerDetails._id === user)
+    if (!owner[0]) {
+      return <Spinner />
+    } else {
+      const { firstname, lastname, email } = owner[0]
+      return (
+        <div className="container">
+          {' '}
+          {!owner[0] ? (
+            <p> Loading...</p>
+          ) : (
+            <p className="minus-margin">Seller: {`${firstname} ${lastname}`}</p>
+          )}
+          {!owner[0] ? (
+            <p> Loading...</p>
+          ) : (
+            <p className="minus-margin">Email: {`${email}`} </p>
+          )}
+          {!owner[0] ? (
+            <p> Loading...</p>
+          ) : (
+            <p className="minus-margin">Phone: (555) 555-5534 </p>
+          )}
         </div>
-        <section>
-          <h1 className="mt-5 headings">
-            <div className="mb-2">
-              {' '}
-              {`${carDetail.year} ${carDetail.make.toUpperCase()} `}{' '}
-            </div>
-            <div> {`${carDetail.model.toUpperCase()}`} </div>
-          </h1>
-          <hr />
+      )
+    }
+  }
 
-          <div className="container-flex-row mt-4">
-            <div>
-              <p>List Price</p>
-            </div>
-            <div>
-              <p>{`$${numberWithCommas(carDetail.listprice.toFixed(2))}`} </p>
-            </div>
+  const carInfo = () => {
+    if (!carDetail) {
+      return <Spinner />
+    } else
+      return (
+        <div className="container-centered">
+          <div className=" container-centered-start">
+            <img
+              className="car-details-image mt-3"
+              src={carDetail.image}
+              alt=""
+            />
           </div>
-          <hr />
-          <div className="container-flex-row mt-4">
-            <div>
-              <p>Mileage</p>
-            </div>
-            <div>
-              <p>{`${numberWithCommas(carDetail.mileage)} `} </p>
-            </div>
-          </div>
-          <hr />
-          <div className="container-flex-row mt-4">
-            <div>
-              <p>Engine Type</p>
-            </div>
-            <div>
-              <p> {carDetail.engine ? upperCase(carDetail.engine) : 'N/A'} </p>
-            </div>
-          </div>
-          <hr />
-          <div className="container-flex-row mt-4">
-            <div>
-              <p>Exterior Color</p>
-            </div>
-            <div>
-              <p>{upperCase(carDetail.color)}</p>
-            </div>
-          </div>
-          <hr />
-          <div className="container-flex-row mt-4">
-            <div>
-              <p>Transmission</p>
-            </div>
-            <div>
-              <p>
-                {carDetail.drivetype ? upperCase(carDetail.drivetype) : 'N/A'}{' '}
-              </p>
-            </div>
-          </div>
-          <hr />
-          <div className="container-flex-row mt-4">
-            <div>
-              <p>Vehicle Type</p>
-            </div>
-            <div>
-              <p>{carDetail.type ? upperCase(carDetail.type) : 'N/A'} </p>
-            </div>
-          </div>
-          <hr />
+          <section>
+            <h1 className="mt-5 headings">
+              <div className="mb-2">
+                {' '}
+                {`${carDetail.year} ${carDetail.make.toUpperCase()} `}{' '}
+              </div>
+              <div> {`${carDetail.model.toUpperCase()}`} </div>
+            </h1>
+            <hr />
 
-          <div className="container-flex-row mt-4">
-            <div>
-              <p>Drive Train</p>
+            <div className="container-flex-row mt-4">
+              <div>
+                <p>List Price</p>
+              </div>
+              <div>
+                <p>{`$${numberWithCommas(carDetail.listprice.toFixed(2))}`} </p>
+              </div>
             </div>
-            <div>
-              <p>
-                {carDetail.transmission
-                  ? upperCase(carDetail.transmission)
-                  : 'N/A'}{' '}
-              </p>
+            <hr />
+            <div className="container-flex-row mt-4">
+              <div>
+                <p>Mileage</p>
+              </div>
+              <div>
+                <p>{`${numberWithCommas(carDetail.mileage)} `} </p>
+              </div>
             </div>
-          </div>
-          <hr />
-          <div>
-            <h1 className="headings mb-5 mt-5 mr-auto">LUXURY OPTIONS</h1>
-          </div>
-          <hr />
-          <div className="container-flex-row mt-4">
-            <div>
-              <p>A/C</p>
+            <hr />
+            <div className="container-flex-row mt-4">
+              <div>
+                <p>Engine Type</p>
+              </div>
+              <div>
+                <p>
+                  {' '}
+                  {carDetail.engine ? upperCase(carDetail.engine) : 'N/A'}{' '}
+                </p>
+              </div>
             </div>
-            <div>
-              <p>{carDetail.ac ? 'Included' : 'N/A'}</p>
+            <hr />
+            <div className="container-flex-row mt-4">
+              <div>
+                <p>Exterior Color</p>
+              </div>
+              <div>
+                <p>{upperCase(carDetail.color)}</p>
+              </div>
             </div>
-          </div>
-          <hr />
-          <div className="container-flex-row mt-4">
-            <div>
-              <p>AM/FM</p>
+            <hr />
+            <div className="container-flex-row mt-4">
+              <div>
+                <p>Transmission</p>
+              </div>
+              <div>
+                <p>
+                  {carDetail.drivetype ? upperCase(carDetail.drivetype) : 'N/A'}{' '}
+                </p>
+              </div>
             </div>
-            <div>
-              <p>{carDetail.amfm ? 'Included' : 'N/A'}</p>
+            <hr />
+            <div className="container-flex-row mt-4">
+              <div>
+                <p>Vehicle Type</p>
+              </div>
+              <div>
+                <p>{carDetail.type ? upperCase(carDetail.type) : 'N/A'} </p>
+              </div>
             </div>
-          </div>
-          <hr />
-          <div className="container-flex-row mt-4">
-            <div>
-              <p>AUX PORT</p>
+            <hr />
+
+            <div className="container-flex-row mt-4">
+              <div>
+                <p>Drive Train</p>
+              </div>
+              <div>
+                <p>
+                  {carDetail.transmission
+                    ? upperCase(carDetail.transmission)
+                    : 'N/A'}{' '}
+                </p>
+              </div>
             </div>
+            <hr />
             <div>
-              <p>{carDetail.auxport ? 'Included' : 'N/A'}</p>
+              <h1 className="headings mb-5 mt-5 mr-auto">LUXURY OPTIONS</h1>
             </div>
-          </div>
-          <hr />
-          <div className="container-flex-row mt-4">
-            <div>
-              <p>Blue Tooth</p>
+            <hr />
+            <div className="container-flex-row mt-4">
+              <div>
+                <p>A/C</p>
+              </div>
+              <div>
+                <p>{carDetail.ac ? 'Included' : 'N/A'}</p>
+              </div>
             </div>
-            <div>
-              <p>{carDetail.bluetooth ? 'Included' : 'N/A'}</p>
+            <hr />
+            <div className="container-flex-row mt-4">
+              <div>
+                <p>AM/FM</p>
+              </div>
+              <div>
+                <p>{carDetail.amfm ? 'Included' : 'N/A'}</p>
+              </div>
             </div>
-          </div>
-          <hr />
-          <div className="container-flex-row mt-4">
-            <div>
-              <p>Cruise Control</p>
+            <hr />
+            <div className="container-flex-row mt-4">
+              <div>
+                <p>AUX PORT</p>
+              </div>
+              <div>
+                <p>{carDetail.auxport ? 'Included' : 'N/A'}</p>
+              </div>
             </div>
-            <div>
-              <p>{carDetail.cruisecontrol ? 'Included' : 'N/A'}</p>
+            <hr />
+            <div className="container-flex-row mt-4">
+              <div>
+                <p>Blue Tooth</p>
+              </div>
+              <div>
+                <p>{carDetail.bluetooth ? 'Included' : 'N/A'}</p>
+              </div>
             </div>
-          </div>
-          <hr />
-          <div className="container-flex-row mt-4">
-            <div>
-              <p>Leater Seats</p>
+            <hr />
+            <div className="container-flex-row mt-4">
+              <div>
+                <p>Cruise Control</p>
+              </div>
+              <div>
+                <p>{carDetail.cruisecontrol ? 'Included' : 'N/A'}</p>
+              </div>
             </div>
-            <div>
-              <p>{carDetail.leatherseats ? 'Included' : 'N/A'}</p>
+            <hr />
+            <div className="container-flex-row mt-4">
+              <div>
+                <p>Leater Seats</p>
+              </div>
+              <div>
+                <p>{carDetail.leatherseats ? 'Included' : 'N/A'}</p>
+              </div>
             </div>
-          </div>
-          <hr />
-          <div className="container-flex-row mt-4">
-            <div>
-              <p>Sat Radio</p>
+            <hr />
+            <div className="container-flex-row mt-4">
+              <div>
+                <p>Sat Radio</p>
+              </div>
+              <div>
+                <p>{carDetail.satradio ? 'Included' : 'N/A'}</p>
+              </div>
             </div>
-            <div>
-              <p>{carDetail.satradio ? 'Included' : 'N/A'}</p>
+            <hr />
+            <div className="container-flex-row mt-4">
+              <div>
+                <p>Sun Roof</p>
+              </div>
+              <div>
+                <p>{carDetail.sunroof ? 'Included' : 'N/A'}</p>
+              </div>
             </div>
-          </div>
-          <hr />
-          <div className="container-flex-row mt-4">
-            <div>
-              <p>Sun Roof</p>
+            <hr />
+            <div className="container-centered mt-4 mb-5">
+              <p>{carDetail.comments}</p>
             </div>
-            <div>
-              <p>{carDetail.sunroof ? 'Included' : 'N/A'}</p>
-            </div>
-          </div>
-          <hr />
-          <div className="container-centered mt-4 mb-5">
-            <p>{carDetail.comments}</p>
-          </div>
-        </section>
-      </div>
-    )
+          </section>
+        </div>
+      )
   }
 
   return (
@@ -248,27 +278,8 @@ function CarDetails() {
         <div className="headings">
           <h1 className="mb-2"> Car Details </h1>
         </div>
-        <div className="container">
-          {' '}
-          {!owner ? (
-            <p> Loading...</p>
-          ) : (
-            <p className="minus-margin">
-              Seller: {`${carDetail.firstname} ${carDetail.lastname}`}
-            </p>
-          )}
-          {!owner ? (
-            <p> Loading...</p>
-          ) : (
-            <p className="minus-margin">Email: {`${carDetail.email}`} </p>
-          )}
-          {!owner ? (
-            <p> Loading...</p>
-          ) : (
-            <p className="minus-margin">Phone: (555) 555-5534 </p>
-          )}
-        </div>
-        {carDetail ? carInfo() : <p>Loading</p>}
+        {ownerInfo()}
+        {carInfo()}
       </div>
     </>
   )

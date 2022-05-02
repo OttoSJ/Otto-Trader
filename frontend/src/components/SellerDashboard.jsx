@@ -1,51 +1,46 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { getCars } from "../features/cars/carSlice";
-import { clearData, setData } from "../features/carDetailsSlice";
-import { numberWithCommas } from "../utilities.js/functions";
-import { upperCase } from "../utilities.js/functions";
+import React from 'react'
+import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { getCars } from '../features/cars/carSlice'
+import { clearData, setData } from '../features/carDetailsSlice'
+import { numberWithCommas } from '../utilities.js/functions'
+import { upperCase } from '../utilities.js/functions'
 
 function SellerDashboard() {
-  const [carData, setCarData] = useState({});
-
   const { cars, isLoading, isError, message } = useSelector(
     (state) => state.cars
-  );
-  const { user } = useSelector((state) => state.auth);
+  )
+  const { user } = useSelector((state) => state.auth)
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (isError) {
-      console.log(message);
+      console.log(message)
     }
 
     if (!user) {
-      navigate("/login");
+      navigate('/login')
     }
-    dispatch(getCars());
-  }, [user, navigate]);
+    dispatch(getCars())
+  }, [user, navigate])
 
-  const sellersInventory = cars.filter((car) => car.user === user._id);
-  console.log(sellersInventory);
+  const sellersInventory = cars.filter((car) => car.user === user._id)
+  console.log(sellersInventory)
 
   const handleCarDetails = (e, car) => {
-    e.preventDefault();
-    dispatch(clearData());
-    dispatch(setData(car));
-    localStorage.removeItem("cardetails");
-    localStorage.setItem("cardetails", JSON.stringify(car));
-    navigate("/cardetails");
-  };
+    e.preventDefault()
 
-  const handeleEditCarDetails = (e) => {
-    e.preventDefault();
+    navigate(`/cardetails/${car._id}`)
+  }
 
-    navigate("/editcardetails");
-  };
+  const handeleEditCarDetails = (e, car) => {
+    e.preventDefault()
+    console.log(car)
+    navigate(`/editcardetails/${car._id}`)
+  }
 
   return (
     <>
@@ -66,14 +61,17 @@ function SellerDashboard() {
                 />
                 <div className="sellers-main-message-container">
                   <p className="m-1 mx-3">
-                    {car.year} {upperCase(car.make)} <br />{" "}
-                    {upperCase(car.model)} <br />{" "}
+                    {car.year} {upperCase(car.make)} <br />{' '}
+                    {upperCase(car.model)} <br />{' '}
                     {`$${numberWithCommas(car.listprice)} / ${numberWithCommas(
                       car.mileage
                     )}mi`}
                   </p>
                   <div className="mb-3 mx-3 ">
-                    <a className="" onClick={(e) => handeleEditCarDetails(e)}>
+                    <a
+                      className=""
+                      onClick={(e) => handeleEditCarDetails(e, car)}
+                    >
                       Edit Car Details
                     </a>
                   </div>
@@ -88,7 +86,7 @@ function SellerDashboard() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default SellerDashboard;
+export default SellerDashboard

@@ -26,7 +26,7 @@ function App() {
       const fetchData = async () => {
         const response = await fetch(API_URL)
         const resData = await response.json()
-        console.log(resData)
+
         if (resData.length > 0) {
           setData(resData)
           dispatch(getCars())
@@ -39,7 +39,6 @@ function App() {
     dispatch
   )
 
-  console.log(data)
   return (
     <>
       <Router>
@@ -52,7 +51,7 @@ function App() {
           <Route path="/sellerdashboard" element={<SellerDashboard />} />
           <Route path="/carregistration" element={<CarRegistration />} />
           <Route path="/cardetails/:id" element={<CarDetails />} />
-          <Route path="/editcardetails" element={<EditCarDetails />} />
+          <Route path="/editcardetails/:id" element={<EditCarDetails />} />
         </Routes>
       </Router>
     </>

@@ -18,7 +18,7 @@ function HomePage({ data }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  console.log(data)
+  console.log(query)
 
   const handleCarDetails = (e, car) => {
     e.preventDefault()
@@ -71,6 +71,7 @@ function HomePage({ data }) {
             ? data
                 .filter((filteredCars) => {
                   if (query === '') {
+                    console.log(filteredCars.make)
                     return data
                   } else if (
                     filteredCars.make
@@ -85,7 +86,6 @@ function HomePage({ data }) {
                   ) {
                     return filteredCars
                   }
-                  return filteredCars
                 })
                 .slice(indexIfFirstCar, indexOfLastCar)
                 .map((filteredCars) => (
