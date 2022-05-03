@@ -3,11 +3,10 @@ import { upperCase, numberWithCommas } from '../utilities.js/functions'
 import { Link } from 'react-router-dom'
 
 function CarCard({ filteredCars, handleCarDetails }) {
-  // console.log(filteredCars)
   return (
     <>
       <main
-        // onClick={(e) => handleCarDetails(e, filteredCars)}
+        onClick={(e) => handleCarDetails(e, filteredCars)}
         className="main-container mt-3 mb-2 cursor"
       >
         <img className="main-picture" src={filteredCars.image} alt="" />

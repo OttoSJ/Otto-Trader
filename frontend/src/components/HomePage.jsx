@@ -18,8 +18,6 @@ function HomePage({ data }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  console.log(query)
-
   const handleCarDetails = (e, car) => {
     e.preventDefault()
     dispatch(getOneCarById(car._id))
@@ -71,7 +69,6 @@ function HomePage({ data }) {
             ? data
                 .filter((filteredCars) => {
                   if (query === '') {
-                    console.log(filteredCars.make)
                     return data
                   } else if (
                     filteredCars.make

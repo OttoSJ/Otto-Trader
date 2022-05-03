@@ -17,7 +17,6 @@ function CarDetails() {
   const dispatch = useDispatch()
 
   const API_URL = `/api/inventory/cardetails/${params.id}`
-  console.log(params)
 
   useEffect(() => {
     const fetchData = async () => {

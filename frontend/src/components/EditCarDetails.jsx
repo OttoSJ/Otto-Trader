@@ -67,7 +67,7 @@ function EditCarDetails() {
   const navigate = useNavigate()
 
   const params = useParams()
-  console.log(params)
+
   const API_URL = `/api/inventory/cardetails/${params.id}`
 
   useEffect(() => {
@@ -97,6 +97,9 @@ function EditCarDetails() {
       dispatch(updateCarDetails(formData))
     }
   }
+
+  console.log(formData)
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,

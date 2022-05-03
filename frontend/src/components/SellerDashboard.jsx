@@ -28,7 +28,6 @@ function SellerDashboard() {
   }, [user, navigate])
 
   const sellersInventory = cars.filter((car) => car.user === user._id)
-  console.log(sellersInventory)
 
   const handleCarDetails = (e, car) => {
     e.preventDefault()
