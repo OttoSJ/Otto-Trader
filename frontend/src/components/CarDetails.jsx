@@ -10,9 +10,7 @@ import Spinner from './Spinner'
 
 function CarDetails() {
   const [carDetail, setCarDetail] = useState('')
-
   const { allUsers } = useSelector((state) => state.allUsers)
-
   const params = useParams()
   const dispatch = useDispatch()
 
@@ -23,7 +21,7 @@ function CarDetails() {
       const response = await fetch(API_URL)
       const resData = await response.json()
       console.log(resData)
-      setCarDetail(resData)
+      await setCarDetail(resData)
     }
 
     fetchData()
@@ -98,19 +96,12 @@ function CarDetails() {
       return (
         <div className="container-centered">
           <div className=" container-centered-start">
-            <img
-              className="car-details-image mt-3"
-              src={carDetail.image}
-              alt=""
-            />
+            <img className="car-details-image mt-3" src={image} alt="" />
           </div>
           <section>
             <h1 className="mt-5 headings">
-              <div className="mb-2">
-                {' '}
-                {`${carDetail.year} ${carDetail.make.toUpperCase()} `}{' '}
-              </div>
-              <div> {`${carDetail.model.toUpperCase()}`} </div>
+              <div className="mb-2"> {`${year} ${make.toUpperCase()} `} </div>
+              <div> {`${model.toUpperCase()}`} </div>
             </h1>
             <hr />
 
@@ -119,7 +110,7 @@ function CarDetails() {
                 <p>List Price</p>
               </div>
               <div>
-                <p>{`$${numberWithCommas(carDetail.listprice.toFixed(2))}`} </p>
+                <p>{`$${numberWithCommas(listprice.toFixed(2))}`} </p>
               </div>
             </div>
             <hr />
@@ -128,7 +119,7 @@ function CarDetails() {
                 <p>Mileage</p>
               </div>
               <div>
-                <p>{`${numberWithCommas(carDetail.mileage)} `} </p>
+                <p>{`${numberWithCommas(mileage)} `} </p>
               </div>
             </div>
             <hr />
@@ -137,10 +128,7 @@ function CarDetails() {
                 <p>Engine Type</p>
               </div>
               <div>
-                <p>
-                  {' '}
-                  {carDetail.engine ? upperCase(carDetail.engine) : 'N/A'}{' '}
-                </p>
+                <p> {engine ? upperCase(engine) : 'N/A'} </p>
               </div>
             </div>
             <hr />
@@ -149,7 +137,7 @@ function CarDetails() {
                 <p>Exterior Color</p>
               </div>
               <div>
-                <p>{upperCase(carDetail.color)}</p>
+                <p>{upperCase(color)}</p>
               </div>
             </div>
             <hr />
@@ -158,9 +146,7 @@ function CarDetails() {
                 <p>Transmission</p>
               </div>
               <div>
-                <p>
-                  {carDetail.drivetype ? upperCase(carDetail.drivetype) : 'N/A'}{' '}
-                </p>
+                <p>{drivetype ? upperCase(drivetype) : 'N/A'} </p>
               </div>
             </div>
             <hr />
@@ -169,7 +155,7 @@ function CarDetails() {
                 <p>Vehicle Type</p>
               </div>
               <div>
-                <p>{carDetail.type ? upperCase(carDetail.type) : 'N/A'} </p>
+                <p>{type ? upperCase(type) : 'N/A'} </p>
               </div>
             </div>
             <hr />
@@ -179,11 +165,7 @@ function CarDetails() {
                 <p>Drive Train</p>
               </div>
               <div>
-                <p>
-                  {carDetail.transmission
-                    ? upperCase(carDetail.transmission)
-                    : 'N/A'}{' '}
-                </p>
+                <p>{transmission ? upperCase(transmission) : 'N/A'} </p>
               </div>
             </div>
             <hr />
@@ -196,7 +178,7 @@ function CarDetails() {
                 <p>A/C</p>
               </div>
               <div>
-                <p>{carDetail.ac ? 'Included' : 'N/A'}</p>
+                <p>{ac ? 'Included' : 'N/A'}</p>
               </div>
             </div>
             <hr />
@@ -205,7 +187,7 @@ function CarDetails() {
                 <p>AM/FM</p>
               </div>
               <div>
-                <p>{carDetail.amfm ? 'Included' : 'N/A'}</p>
+                <p>{amfm ? 'Included' : 'N/A'}</p>
               </div>
             </div>
             <hr />
@@ -214,7 +196,7 @@ function CarDetails() {
                 <p>AUX PORT</p>
               </div>
               <div>
-                <p>{carDetail.auxport ? 'Included' : 'N/A'}</p>
+                <p>{auxport ? 'Included' : 'N/A'}</p>
               </div>
             </div>
             <hr />
@@ -223,7 +205,7 @@ function CarDetails() {
                 <p>Blue Tooth</p>
               </div>
               <div>
-                <p>{carDetail.bluetooth ? 'Included' : 'N/A'}</p>
+                <p>{bluetooth ? 'Included' : 'N/A'}</p>
               </div>
             </div>
             <hr />
@@ -232,7 +214,7 @@ function CarDetails() {
                 <p>Cruise Control</p>
               </div>
               <div>
-                <p>{carDetail.cruisecontrol ? 'Included' : 'N/A'}</p>
+                <p>{cruisecontrol ? 'Included' : 'N/A'}</p>
               </div>
             </div>
             <hr />
@@ -241,7 +223,7 @@ function CarDetails() {
                 <p>Leater Seats</p>
               </div>
               <div>
-                <p>{carDetail.leatherseats ? 'Included' : 'N/A'}</p>
+                <p>{leatherseats ? 'Included' : 'N/A'}</p>
               </div>
             </div>
             <hr />
@@ -250,7 +232,7 @@ function CarDetails() {
                 <p>Sat Radio</p>
               </div>
               <div>
-                <p>{carDetail.satradio ? 'Included' : 'N/A'}</p>
+                <p>{satradio ? 'Included' : 'N/A'}</p>
               </div>
             </div>
             <hr />
@@ -259,12 +241,12 @@ function CarDetails() {
                 <p>Sun Roof</p>
               </div>
               <div>
-                <p>{carDetail.sunroof ? 'Included' : 'N/A'}</p>
+                <p>{sunroof ? 'Included' : 'N/A'}</p>
               </div>
             </div>
             <hr />
             <div className="container-centered mt-4 mb-5">
-              <p>{carDetail.comments}</p>
+              <p>{comments}</p>
             </div>
           </section>
         </div>

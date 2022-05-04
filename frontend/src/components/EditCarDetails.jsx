@@ -60,7 +60,7 @@ function EditCarDetails() {
     auxport: auxport,
     amfm: amfm,
   })
-
+  console.log(make)
   const { user } = useSelector((state) => state.auth)
 
   const dispatch = useDispatch()
@@ -79,6 +79,7 @@ function EditCarDetails() {
       const resData = await response.json()
       console.log(resData)
       setCarDetails(resData)
+      setFormData(resData)
     }
 
     fetchData()
@@ -93,8 +94,8 @@ function EditCarDetails() {
     if (!user) {
       toast.error('Please login or create and account')
     } else {
-      navigate(`/cardetails/${params.id}`)
       dispatch(updateCarDetails(formData))
+      navigate(`/cardetails/${params.id}`)
     }
   }
 

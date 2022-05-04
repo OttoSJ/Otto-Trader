@@ -1,9 +1,9 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { getCars } from '../features/cars/carSlice'
-import { clearData, setData } from '../features/carDetailsSlice'
+// import { clearData, setData } from '../features/carDetailsSlice'
 import { numberWithCommas } from '../utilities.js/functions'
 import { upperCase } from '../utilities.js/functions'
 
@@ -25,7 +25,7 @@ function SellerDashboard() {
       navigate('/login')
     }
     dispatch(getCars())
-  }, [user, navigate])
+  }, [user, navigate, isLoading, isError, message, dispatch])
 
   const sellersInventory = cars.filter((car) => car.user === user._id)
 
