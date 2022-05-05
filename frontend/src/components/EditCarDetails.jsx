@@ -60,14 +60,11 @@ function EditCarDetails() {
     auxport: auxport,
     amfm: amfm,
   })
-  console.log(make)
-  const { user } = useSelector((state) => state.auth)
 
+  const { user } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
   const params = useParams()
-
   const API_URL = `/api/inventory/cardetails/${params.id}`
 
   useEffect(() => {
@@ -77,7 +74,7 @@ function EditCarDetails() {
     const fetchData = async () => {
       const response = await fetch(API_URL)
       const resData = await response.json()
-      console.log(resData)
+
       setCarDetails(resData)
       setFormData(resData)
     }
@@ -427,7 +424,9 @@ function EditCarDetails() {
       )
     }
   }
-
+  if (!carDetails) {
+    return <Spinner />
+  }
   return (
     <div>
       <div>

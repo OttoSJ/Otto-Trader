@@ -14,30 +14,24 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { getAllUsers } from './features/users/usersSlice'
 
 function App() {
-  // const [search, setSearch] = useState('')
-  // const [message, setMessage] = useState('Search for Music!')
   const [data, setData] = useState([])
   const dispatch = useDispatch()
 
   const API_URL = `/api/inventory/`
 
-  useEffect(
-    () => {
-      const fetchData = async () => {
-        const response = await fetch(API_URL)
-        const resData = await response.json()
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(API_URL)
+      const resData = await response.json()
 
-        if (resData.length > 0) {
-          setData(resData)
-          dispatch(getCars())
-        }
+      if (resData.length > 0) {
+        setData(resData)
+        dispatch(getCars())
       }
-      fetchData()
-      dispatch(getAllUsers())
-    },
-    [API_URL, dispatch],
-    dispatch
-  )
+    }
+    fetchData()
+    dispatch(getAllUsers())
+  }, [API_URL, dispatch])
 
   return (
     <>

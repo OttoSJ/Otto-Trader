@@ -98,6 +98,7 @@ function CarRegistration() {
     }
     console.log(carData)
     dispatch(createCar(carData))
+    navigate('/sellerdashboard')
   }
 
   const onChange = (e) => {
@@ -156,7 +157,7 @@ function CarRegistration() {
                 Year
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control"
                 name="year"
                 id="year"
@@ -180,7 +181,7 @@ function CarRegistration() {
                 Listprice
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control"
                 name="listprice"
                 id="listprice"

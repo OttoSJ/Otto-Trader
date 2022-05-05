@@ -1,31 +1,27 @@
 import React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { getCars } from '../features/cars/carSlice'
-// import { clearData, setData } from '../features/carDetailsSlice'
 import { numberWithCommas } from '../utilities.js/functions'
 import { upperCase } from '../utilities.js/functions'
+import Spinner from './Spinner'
 
 function SellerDashboard() {
   const { cars, isLoading, isError, message } = useSelector(
     (state) => state.cars
   )
   const { user } = useSelector((state) => state.auth)
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (isError) {
-      console.log(message)
-    }
-
     if (!user) {
       navigate('/login')
     }
     dispatch(getCars())
-  }, [user, navigate, isLoading, isError, message, dispatch])
+  }, [user, navigate, dispatch])
 
   const sellersInventory = cars.filter((car) => car.user === user._id)
 
