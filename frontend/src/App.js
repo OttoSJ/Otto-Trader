@@ -8,13 +8,16 @@ import SellerDashboard from './components/SellerDashboard'
 import CarRegistration from './components/CarRegistration'
 import CarDetails from './components/CarDetails'
 import EditCarDetails from './components/EditCarDetails'
+import Spinner from './components/Spinner'
 import { useDispatch } from 'react-redux'
 import { getCars } from '../../frontend/src/features/cars/carSlice'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { getAllUsers } from './features/users/usersSlice'
+import { GlobalContext } from './utilities.js/GlobalContext'
 
 function App() {
   const [data, setData] = useState([])
+  const [formData, setFormData] = useState('')
   const dispatch = useDispatch()
 
   const API_URL = `/api/inventory/`
@@ -33,20 +36,31 @@ function App() {
     dispatch(getAllUsers())
   }, [API_URL, dispatch])
 
+  const handleFormData = (e, formData) => {
+    e.preventDefault()
+    setFormData(formData)
+  }
+
   return (
     <>
       <Router>
         <Navbar />
-        <Routes>
-          <Route />
-          <Route path="/" element={<HomePage data={data} />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/registration" element={<Registration />} />
-          <Route path="/sellerdashboard" element={<SellerDashboard />} />
-          <Route path="/carregistration" element={<CarRegistration />} />
-          <Route path="/cardetails/:id" element={<CarDetails />} />
-          <Route path="/editcardetails/:id" element={<EditCarDetails />} />
-        </Routes>
+        <GlobalContext.Provider value={formData}>
+          <Routes>
+            <Route />
+            <Route path="/" element={<HomePage data={data} />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/registration" element={<Registration />} />
+            <Route path="/sellerdashboard" element={<SellerDashboard />} />
+            <Route path="/carregistration" element={<CarRegistration />} />
+            <Route path="/cardetails/:id" element={<CarDetails />} />
+            <Route
+              path="/editcardetails/:id"
+              element={<EditCarDetails handleFormData={handleFormData} />}
+            />
+            <Route path="spinner" element={<Spinner />} />
+          </Routes>
+        </GlobalContext.Provider>
       </Router>
     </>
   )

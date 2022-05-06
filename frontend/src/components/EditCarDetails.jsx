@@ -3,13 +3,13 @@ import { FaCar } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { getCars, updateCarDetails, deleteCar } from '../features/cars/carSlice'
+import { updateCarDetails, deleteCar } from '../features/cars/carSlice'
 import { upperCase, numberWithCommas } from '../utilities.js/functions'
 import { getOneCarById } from '../features/carDetails/carDetailsSlice'
 import Spinner from './Spinner'
 import { toast } from 'react-toastify'
 
-function EditCarDetails() {
+function EditCarDetails({ handleFormData }) {
   const [carDetails, setCarDetails] = useState('')
   let {
     _id,
@@ -29,12 +29,12 @@ function EditCarDetails() {
     leatherseats,
     sunroof,
     bluetooth,
-    comments,
+    // comments,
     cruisecontrol,
     satradio,
     auxport,
     amfm,
-    createdAt,
+    // createdAt,
   } = carDetails
 
   let [formData, setFormData] = useState({
@@ -81,22 +81,20 @@ function EditCarDetails() {
 
     fetchData()
 
-    dispatch(getOneCarById(params._id))
-
+    dispatch(getOneCarById(params.id))
     window.scrollTo(0, 0)
-  }, [params._id, API_URL, dispatch, navigate, user])
+  }, [params.id, API_URL, dispatch, navigate, user])
 
   const onSubmit = (e) => {
     e.preventDefault()
     if (!user) {
       toast.error('Please login or create and account')
     } else {
+      handleFormData(e, formData)
       dispatch(updateCarDetails(formData))
       navigate(`/cardetails/${params.id}`)
     }
   }
-
-  console.log(formData)
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -153,7 +151,7 @@ function EditCarDetails() {
             </label>
             <input
               defaultValue={year}
-              type="text"
+              type="number"
               className="form-control"
               name="year"
               id="year"
@@ -241,19 +239,7 @@ function EditCarDetails() {
               onChange={onChange}
             />
           </div>
-          <div className="col-6">
-            <label htmlFor="image" className="form-label">
-              Image
-            </label>
-            <input
-              defaultValue={image}
-              type="text"
-              className="form-control"
-              name="image"
-              id="image"
-              onChange={onChange}
-            />
-          </div>
+
           <div className="col-6">
             <label htmlFor="mileage" className="form-label">
               Mileage
@@ -264,6 +250,23 @@ function EditCarDetails() {
               className="form-control"
               name="mileage"
               id="mileage"
+              onChange={onChange}
+            />
+          </div>
+
+          <div
+            className="col-12
+          "
+          >
+            <label htmlFor="image" className="form-label ">
+              Image
+            </label>
+            <input
+              defaultValue={image}
+              type="text"
+              className="form-control"
+              name="image"
+              id="image"
               onChange={onChange}
             />
           </div>

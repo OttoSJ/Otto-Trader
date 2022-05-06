@@ -8,9 +8,7 @@ import { upperCase } from '../utilities.js/functions'
 import Spinner from './Spinner'
 
 function SellerDashboard() {
-  const { cars, isLoading, isError, message } = useSelector(
-    (state) => state.cars
-  )
+  const { cars } = useSelector((state) => state.cars)
   const { user } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -21,6 +19,9 @@ function SellerDashboard() {
       navigate('/login')
     }
     dispatch(getCars())
+    if (cars) {
+      setLoading(false)
+    }
   }, [user, navigate, dispatch])
 
   const sellersInventory = cars.filter((car) => car.user === user._id)
@@ -35,6 +36,10 @@ function SellerDashboard() {
     e.preventDefault()
     console.log(car)
     navigate(`/editcardetails/${car._id}`)
+  }
+
+  if (loading) {
+    return <Spinner />
   }
 
   return (

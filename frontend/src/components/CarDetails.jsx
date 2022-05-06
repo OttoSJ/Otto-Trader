@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { numberWithCommas } from '../utilities.js/functions'
@@ -7,12 +7,15 @@ import { getCars } from '../features/cars/carSlice'
 import { getAllUsers } from '../features/users/usersSlice'
 import { getOneCarById } from '../features/carDetails/carDetailsSlice'
 import Spinner from './Spinner'
+import { GlobalContext } from '../utilities.js/GlobalContext'
 
 function CarDetails() {
   const [carDetail, setCarDetail] = useState('')
-  const { allUsers } = useSelector((state) => state.allUsers)
   const params = useParams()
+  const formData = useContext(GlobalContext)
   const dispatch = useDispatch()
+
+  const { allUsers } = useSelector((state) => state.allUsers)
 
   const API_URL = `/api/inventory/cardetails/${params.id}`
 
@@ -20,17 +23,21 @@ function CarDetails() {
     const fetchData = async () => {
       const response = await fetch(API_URL)
       const resData = await response.json()
-      console.log(resData)
-      await setCarDetail(resData)
+
+      setCarDetail(resData)
     }
 
-    fetchData()
+    setCarDetail(formData)
+
+    if (!formData) {
+      fetchData()
+    }
 
     dispatch(getCars())
-    dispatch(getOneCarById(params._id))
+    dispatch(getOneCarById(params.id))
     dispatch(getAllUsers())
     window.scrollTo(0, 0)
-  }, [params._id, API_URL, dispatch])
+  }, [params.id, API_URL, dispatch, formData])
 
   const {
     color,
@@ -56,14 +63,14 @@ function CarDetails() {
     transmission,
   } = carDetail
 
-  if (!allUsers) {
+  if (!carDetail) {
     return <Spinner />
   }
 
   const ownerInfo = () => {
     const owner = allUsers.filter((ownerDetails) => ownerDetails._id === user)
     if (!owner[0]) {
-      return <Spinner />
+      return null
     } else {
       const { firstname, lastname, email } = owner[0]
       return (
@@ -91,7 +98,7 @@ function CarDetails() {
 
   const carInfo = () => {
     if (!carDetail) {
-      return <Spinner />
+      return null
     } else
       return (
         <div className="container-centered">

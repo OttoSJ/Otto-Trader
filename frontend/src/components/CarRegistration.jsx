@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FaCar, FaOptinMonster } from 'react-icons/fa'
+import { FaCar } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useSelector, useDispatch } from 'react-redux'
@@ -8,6 +8,8 @@ import { createCar, reset } from '../features/cars/carSlice'
 import Spinner from './Spinner'
 
 function CarRegistration() {
+  const [loading, setLoading] = useState(true)
+
   const [formData, setFromData] = useState({
     make: '',
     model: '',
@@ -65,11 +67,13 @@ function CarRegistration() {
     if (isError) {
       toast.error(message)
     }
-    // if (isSuccess || car) {
-    //   navigate("/sellerdashboard");
-    // }
+
+    if (isSuccess) {
+      setLoading(false)
+    }
+
     dispatch(reset())
-  }, [car, isError, isSuccess, message, navigate, dispatch])
+  }, [car, isError, isSuccess, message, navigate, dispatch, loading])
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -106,11 +110,9 @@ function CarRegistration() {
       ...prevState,
       [e.target.name]: e.target.value,
     }))
-    console.log({ Make: make }, { Model: model }, { Radio: amfm })
-    console.log(amfm)
   }
 
-  if (isLoading) {
+  if (loading) {
     return <Spinner />
   }
 

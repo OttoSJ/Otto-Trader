@@ -1,16 +1,18 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Pagination from './Pagintation'
 import CarCard from './CarCard'
 import { getOneCarById } from '../features/carDetails/carDetailsSlice'
+import Spinner from './Spinner'
 
 function HomePage({ data }) {
   // const [carDataLength, setCarDataLength] = useState(9)
   const [query, setQuery] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [carsPerPage] = useState(6)
+  const [loading, setLoading] = useState(true)
 
   const indexOfLastCar = currentPage * carsPerPage
   const indexIfFirstCar = indexOfLastCar - carsPerPage
@@ -18,17 +20,21 @@ function HomePage({ data }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  useEffect(() => {
+    if (data) {
+      setLoading(false)
+    }
+  }, [setLoading])
+
   const handleCarDetails = (e, car) => {
     e.preventDefault()
     dispatch(getOneCarById(car._id))
 
     const fetchData = async () => {
       const API_URL = `/api/inventory/cardetails/${car._id}`
-
       const response = await fetch(API_URL)
       const resData = await response.json()
 
-      console.log(resData)
       await navigate(`/cardetails/${resData._id}`)
     }
 
@@ -43,6 +49,10 @@ function HomePage({ data }) {
   const paginate = (number) => {
     setCurrentPage(number)
     window.scrollTo(0, 0)
+  }
+
+  if (loading) {
+    return <Spinner />
   }
 
   return (
