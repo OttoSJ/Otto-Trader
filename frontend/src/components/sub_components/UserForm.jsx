@@ -1,7 +1,23 @@
-import React from 'react'
+import React, { useEffect, useSelector, useState } from 'react'
 import { Row, Col, Form } from 'react-bootstrap'
+import { useParams } from 'react-router-dom'
 
 function UserForm({ onChange }) {
+  //   const [user, setUser] = useState('')
+  //   const params = useParams()
+  //   const API_URL_USER_INFO = `/api/users/update-user-info/${params.id}`
+
+  //   useEffect(() => {
+  //     if (!user) {
+  //       const fetchData = async () => {
+  //         const response = await fetch(API_URL_USER_INFO)
+  //         const resData = await response.json()
+  //         console.log(resData)
+  //       }
+  //       fetchData()
+  //     }
+  //   }, [])
+
   return (
     <Form.Group className="row g-3 mt-3">
       <Row>

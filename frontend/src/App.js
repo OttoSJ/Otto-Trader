@@ -14,6 +14,7 @@ import { getCars } from '../../frontend/src/features/cars/carSlice'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { getAllUsers } from './features/users/usersSlice'
 import { GlobalContext } from './utilities.js/GlobalContext'
+import EditUserDetails from './components/EditUserDetails'
 
 function App() {
   const [data, setData] = useState([])
@@ -58,7 +59,10 @@ function App() {
               path="/editcardetails/:id"
               element={<EditCarDetails handleFormData={handleFormData} />}
             />
-            <Route path="spinner" element={<Spinner />} />
+            <Route
+              path="/edituserdetails/:userId"
+              element={<EditUserDetails />}
+            />
           </Routes>
         </GlobalContext.Provider>
       </Router>
