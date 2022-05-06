@@ -20,11 +20,11 @@ function App() {
   const [formData, setFormData] = useState('')
   const dispatch = useDispatch()
 
-  const API_URL = `/api/inventory/`
+  const API_URL_INVENTORY = `/api/inventory/`
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(API_URL)
+      const response = await fetch(API_URL_INVENTORY)
       const resData = await response.json()
 
       if (resData.length > 0) {
@@ -34,7 +34,7 @@ function App() {
     }
     fetchData()
     dispatch(getAllUsers())
-  }, [API_URL, dispatch])
+  }, [API_URL_INVENTORY, dispatch])
 
   const handleFormData = (e, formData) => {
     e.preventDefault()

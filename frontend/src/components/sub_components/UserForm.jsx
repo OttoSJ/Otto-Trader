@@ -1,109 +1,116 @@
 import React from 'react'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Form } from 'react-bootstrap'
 
 function UserForm({ onChange }) {
   return (
-    <section className="row g-3 mt-3">
-      <div className="col-6 ">
-        <label htmlFor="firstname" className="form-label">
-          First Name
-        </label>
-        <input
-          autoFocus
-          type="text"
-          className="form-control"
-          name="firstname"
-          id="firstname"
-          placeholder="First Name"
-          onChange={onChange}
-        />
-      </div>
-      <div className="col-6">
-        <label htmlFor="lastname" className="form-label">
-          Last Name
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          name="lastname"
-          id="lastname"
-          placeholder="Last Name"
-          onChange={onChange}
-        />
-      </div>
+    <Form.Group className="row g-3 mt-3">
+      <Row>
+        <Col className="mt-5" md={6}>
+          <Form.Label htmlFor="firstname" className="form-label">
+            First Name
+          </Form.Label>
+          <Form.Control
+            autoFocus
+            type="text"
+            className="form-control"
+            name="firstname"
+            id="firstname"
+            placeholder="First Name"
+            onChange={onChange}
+          />
+        </Col>
+        <Col className="mt-5" md={6}>
+          <Form.Label htmlFor="lastname" className="form-label">
+            Last Name
+          </Form.Label>
+          <Form.Control
+            type="text"
+            className="form-control"
+            name="lastname"
+            id="lastname"
+            placeholder="Last Name"
+            onChange={onChange}
+          />
+        </Col>
+      </Row>
 
-      <div className="col-md-6">
-        <label htmlFor="password" className="form-label">
-          Password
-        </label>
-        <input
-          type="password"
-          className="form-control"
-          name="password"
-          id="password"
-          placeholder="Password"
-          onChange={onChange}
-        />
-      </div>
-      <div className="col-md-6">
-        <label htmlFor="password2" className="form-label">
-          Confirm Password
-        </label>
-        <input
-          type="password"
-          className="form-control"
-          name="password2"
-          id="password2"
-          placeholder="Confirm Password"
-          onChange={onChange}
-        />
-      </div>
-      <div className="col-md-6">
-        <label htmlFor="username" className="form-label">
-          Username
-        </label>
-        <input
-          type="username"
-          className="form-control"
-          name="username"
-          id="username"
-          placeholder="Username"
-          onChange={onChange}
-        />
-      </div>
-      <div className="col-md-6">
-        <label htmlFor="email" className="form-label">
-          Email
-        </label>
-        <input
-          type="email"
-          className="form-control"
-          name="email"
-          id="email"
-          placeholder="Email"
-          onChange={onChange}
-        />
-      </div>
+      <Row>
+        <Col className="mt-5" md={6}>
+          <Form.Label htmlFor="password" className="form-label">
+            Password
+          </Form.Label>
+          <Form.Control
+            type="password"
+            className="form-control"
+            name="password"
+            id="password"
+            placeholder="Password"
+            onChange={onChange}
+          />
+        </Col>
+        <Col className="mt-5" md={6}>
+          <Form.Label htmlFor="password2" className="form-label">
+            Confirm Password
+          </Form.Label>
+          <Form.Control
+            type="password"
+            className="form-control"
+            name="password2"
+            id="password2"
+            placeholder="Confirm Password"
+            onChange={onChange}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col className="mt-5" md={6}>
+          <Form.Label htmlFor="username" className="form-label">
+            Username
+          </Form.Label>
+          <Form.Control
+            type="username"
+            className="form-control"
+            name="username"
+            id="username"
+            placeholder="Username"
+            onChange={onChange}
+          />
+        </Col>
+        <Col className="mt-5" md={6}>
+          <Form.Label htmlFor="email" className="form-label">
+            Email
+          </Form.Label>
+          <Form.Control
+            type="email"
+            className="form-control"
+            name="email"
+            id="email"
+            placeholder="Email"
+            onChange={onChange}
+          />
+        </Col>
+      </Row>
 
-      <div className="col-12">
-        <label htmlFor="address" className="form-label">
-          Address
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          name="address"
-          id="address"
-          placeholder="1234 Main St"
-          onChange={onChange}
-        />
-      </div>
-
-      <div className="col-md-6">
-        <label htmlFor="city" className="form-label">
+      <Row>
+        <Col className="mt-5" md={12}>
+          <Form.Label htmlFor="address" className="form-label">
+            Address
+          </Form.Label>
+          <Form.Control
+            type="text"
+            className="form-control"
+            name="address"
+            id="address"
+            placeholder="1234 Main St"
+            onChange={onChange}
+          />
+        </Col>
+      </Row>
+      <Col className="mt-5" md={6}>
+        <Form.Label htmlFor="city" className="form-label">
           City
-        </label>
-        <input
+        </Form.Label>
+        <Form.Control
           type="text"
           className="form-control"
           name="city"
@@ -111,12 +118,12 @@ function UserForm({ onChange }) {
           placeholder="City"
           onChange={onChange}
         />
-      </div>
-      <div className="col-md-3">
-        <label htmlFor="state" className="form-label">
+      </Col>
+      <Col className="mt-5" md={3}>
+        <Form.Label htmlFor="state" className="form-label">
           State
-        </label>
-        <select
+        </Form.Label>
+        <Form.Select
           id="state state-list"
           name="state"
           className="form-select"
@@ -174,13 +181,13 @@ function UserForm({ onChange }) {
           <option value="WI">Wisconsin</option>
           <option value="WV">West Virginia</option>
           <option value="WY">Wyoming</option>
-        </select>
-      </div>
-      <div className="col-md-3">
-        <label htmlFor="zip" className="form-label">
+        </Form.Select>
+      </Col>
+      <Col className="mt-5" md={3}>
+        <Form.Label htmlFor="zip" className="form-label">
           Zip
-        </label>
-        <input
+        </Form.Label>
+        <Form.Control
           type="text"
           className="form-control"
           name="zip"
@@ -188,8 +195,8 @@ function UserForm({ onChange }) {
           placeholder="Zip Code"
           onChange={onChange}
         />
-      </div>
-    </section>
+      </Col>
+    </Form.Group>
   )
 }
 
