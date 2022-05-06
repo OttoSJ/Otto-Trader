@@ -1,5 +1,5 @@
 import React from 'react'
-import { upperCase, numberWithCommas } from '../utilities.js/functions'
+import { upperCase, numberWithCommas } from '../../utilities.js/functions'
 import { Link } from 'react-router-dom'
 
 function CarCard({ filteredCars, handleCarDetails }) {

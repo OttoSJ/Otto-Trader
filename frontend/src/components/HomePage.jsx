@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Pagination from './Pagintation'
-import CarCard from './CarCard'
+import CarCard from './sub_components/CarCard'
 import { getOneCarById } from '../features/carDetails/carDetailsSlice'
 import Spinner from './Spinner'
 
