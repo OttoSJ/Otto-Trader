@@ -9,7 +9,7 @@ function Header() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.auth)
-  console.log(user._id)
+
   const onLogout = () => {
     dispatch(logout())
     dispatch(reset(navigate('/')))
@@ -18,7 +18,6 @@ function Header() {
   const handleEditUser = (e) => {
     e.preventDefault()
     navigate(`/edituserdetails/${user._id}`)
-    console.log('clicked')
   }
 
   return (

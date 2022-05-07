@@ -34,7 +34,7 @@ function SellerDashboard() {
 
   const handeleEditCarDetails = (e, car) => {
     e.preventDefault()
-    console.log(car)
+
     navigate(`/editcardetails/${car._id}`)
   }
 

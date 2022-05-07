@@ -1,23 +1,7 @@
-import React, { useEffect, useSelector, useState } from 'react'
+import React from 'react'
 import { Row, Col, Form } from 'react-bootstrap'
-import { useParams } from 'react-router-dom'
 
-function UserForm({ onChange }) {
-  //   const [user, setUser] = useState('')
-  //   const params = useParams()
-  //   const API_URL_USER_INFO = `/api/users/update-user-info/${params.id}`
-
-  //   useEffect(() => {
-  //     if (!user) {
-  //       const fetchData = async () => {
-  //         const response = await fetch(API_URL_USER_INFO)
-  //         const resData = await response.json()
-  //         console.log(resData)
-  //       }
-  //       fetchData()
-  //     }
-  //   }, [])
-
+function UserForm({ onChange, userInformation }) {
   return (
     <Form.Group className="row g-3 mt-3">
       <Row>
@@ -31,7 +15,8 @@ function UserForm({ onChange }) {
             className="form-control"
             name="firstname"
             id="firstname"
-            placeholder="First Name"
+            defaultValue={userInformation ? userInformation.firstname : null}
+            placeholder={!userInformation ? 'First Name' : null}
             onChange={onChange}
           />
         </Col>
@@ -44,40 +29,46 @@ function UserForm({ onChange }) {
             className="form-control"
             name="lastname"
             id="lastname"
-            placeholder="Last Name"
+            defaultValue={userInformation ? userInformation.lastname : null}
+            placeholder={!userInformation ? 'Last Name' : null}
             onChange={onChange}
           />
         </Col>
       </Row>
+      {!userInformation ? (
+        <>
+          {' '}
+          <Row>
+            <Col className="mt-5" md={6}>
+              <Form.Label htmlFor="password" className="form-label">
+                Password
+              </Form.Label>
+              <Form.Control
+                type="password"
+                className="form-control"
+                name="password"
+                id="password"
+                placeholder="Password"
+                onChange={onChange}
+              />
+            </Col>
+            <Col className="mt-5" md={6}>
+              <Form.Label htmlFor="password2" className="form-label">
+                Confirm Password
+              </Form.Label>
+              <Form.Control
+                type="password"
+                className="form-control"
+                name="password2"
+                id="password2"
+                placeholder="Confirm Password"
+                onChange={onChange}
+              />
+            </Col>
+          </Row>
+        </>
+      ) : null}
 
-      <Row>
-        <Col className="mt-5" md={6}>
-          <Form.Label htmlFor="password" className="form-label">
-            Password
-          </Form.Label>
-          <Form.Control
-            type="password"
-            className="form-control"
-            name="password"
-            id="password"
-            placeholder="Password"
-            onChange={onChange}
-          />
-        </Col>
-        <Col className="mt-5" md={6}>
-          <Form.Label htmlFor="password2" className="form-label">
-            Confirm Password
-          </Form.Label>
-          <Form.Control
-            type="password"
-            className="form-control"
-            name="password2"
-            id="password2"
-            placeholder="Confirm Password"
-            onChange={onChange}
-          />
-        </Col>
-      </Row>
       <Row>
         <Col className="mt-5" md={6}>
           <Form.Label htmlFor="username" className="form-label">
@@ -88,7 +79,8 @@ function UserForm({ onChange }) {
             className="form-control"
             name="username"
             id="username"
-            placeholder="Username"
+            defaultValue={userInformation ? userInformation.username : null}
+            placeholder={!userInformation ? 'Username' : null}
             onChange={onChange}
           />
         </Col>
@@ -101,7 +93,8 @@ function UserForm({ onChange }) {
             className="form-control"
             name="email"
             id="email"
-            placeholder="Email"
+            defaultValue={userInformation ? userInformation.email : null}
+            placeholder={!userInformation ? 'Email' : null}
             onChange={onChange}
           />
         </Col>
@@ -117,7 +110,8 @@ function UserForm({ onChange }) {
             className="form-control"
             name="address"
             id="address"
-            placeholder="1234 Main St"
+            defaultValue={userInformation ? userInformation.address : null}
+            placeholder={!userInformation ? '1234 Main St' : null}
             onChange={onChange}
           />
         </Col>
@@ -131,7 +125,8 @@ function UserForm({ onChange }) {
           className="form-control"
           name="city"
           id="city"
-          placeholder="City"
+          defaultValue={userInformation ? userInformation.city : null}
+          placeholder={!userInformation ? 'City' : null}
           onChange={onChange}
         />
       </Col>
@@ -145,7 +140,10 @@ function UserForm({ onChange }) {
           className="form-select"
           onChange={onChange}
         >
-          <option value="Choose">Choose...</option>
+          <option value="Choose">
+            {' '}
+            {userInformation ? userInformation.state : 'Choose...'}{' '}
+          </option>
 
           <option value="AK">Alaska</option>
           <option value="AL">Alabama</option>
@@ -208,7 +206,8 @@ function UserForm({ onChange }) {
           className="form-control"
           name="zip"
           id="zip"
-          placeholder="Zip Code"
+          defaultValue={userInformation ? userInformation.zip : null}
+          placeholder={!userInformation ? 'Zip Code' : null}
           onChange={onChange}
         />
       </Col>
