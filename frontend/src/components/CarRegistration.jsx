@@ -59,7 +59,7 @@ function CarRegistration() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const { car, isError, isLoading, isSuccess, message } = useSelector(
+  const { car, isError, isSuccess, message } = useSelector(
     (state) => state.cars
   )
 
@@ -102,6 +102,8 @@ function CarRegistration() {
     }
     console.log(carData)
     dispatch(createCar(carData))
+    // Once car is created get response with car Id and place it in State
+    // Next pass it to function that will update user with new carId onto vehicleinventory: ref array ** See carService line 14 notes
     navigate('/sellerdashboard')
   }
 

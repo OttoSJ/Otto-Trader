@@ -8,13 +8,17 @@ import { upperCase } from '../utilities.js/functions'
 import Spinner from './Spinner'
 
 function SellerDashboard() {
+  // const [sellersInventory, setSellersInventory] = useState('')
   const { cars } = useSelector((state) => state.cars)
   const { user } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
 
+  console.log(user._id)
+
   useEffect(() => {
+    // You can do a fetch request here and use localstorage to get the users id to pass to the url or use the state (line 13) to get the users id.
     if (!user) {
       navigate('/login')
     }
@@ -28,7 +32,7 @@ function SellerDashboard() {
 
   const handleCarDetails = (e, car) => {
     e.preventDefault()
-
+    console.log(car._id)
     navigate(`/cardetails/${car._id}`)
   }
 

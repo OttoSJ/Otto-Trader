@@ -11,6 +11,18 @@ const createCar = async (carData, token) => {
 
   const response = await axios.post(API_URL, carData, config)
 
+  const API_URL_UPDATE_USER = `/api/users/update-user-info/${response.data.user}`
+
+  const carId = { vehicleinventory: response.data._id }
+
+  // I need the users id
+  // console.log(response.data.user)
+  // I need the car id
+  // console.log(response.data._id)
+
+  // I need the fetch request inside of this function.
+  const updateUserResponse = await axios.put(API_URL_UPDATE_USER, carId, config)
+
   return response.data
 }
 

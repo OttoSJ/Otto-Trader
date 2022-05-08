@@ -11,7 +11,7 @@ const getSingleUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.userId).select('-password')
 
     if (!user) {
-      res.status(404)
+      res.status(401)
       throw new Error('User not Authorized')
     }
     res.status(200).json(user)
@@ -24,6 +24,23 @@ const getSingleUser = asyncHandler(async (req, res) => {
 const getUser = asyncHandler(async (req, res) => {
   const allUsers = await User.find()
   res.status(200).json(allUsers)
+})
+
+// GET - GET USRES INVENTORY
+const getUsersInventory = asyncHandler(async (req, res) => {
+  try {
+    const checkUser = await User.findById(req.params.userId)
+    if (!checkUser) {
+      res.status(401)
+      throw new Error('User not Authorized')
+    }
+    const user = await User.findById(req.params.userId).populate([
+      { path: 'vehicleinventory', model: 'Car' },
+    ])
+    res.status(201).json(user)
+  } catch (error) {
+    res.status(500).json({ message: error })
+  }
 })
 
 // ALL POST REQUEST ////////////////////////////////////
@@ -125,6 +142,7 @@ const updateUser = asyncHandler(async (req, res) => {
       req.body,
       { new: true }
     )
+
     res.status(200).json(updateUserInfo)
   } catch (error) {
     res.status(400).json({
@@ -160,6 +178,7 @@ module.exports = {
   loginUser,
   getUser,
   getSingleUser,
+  getUsersInventory,
   updateUser,
   deleteUser,
 }

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const userSchema = mongoose.Schema(
   {
@@ -45,10 +45,17 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    vehicleinventory: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Car',
+        required: false,
+      },
+    ],
   },
   { timestamps: true }
-);
+)
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema)
 
-module.exports = User;
+module.exports = User

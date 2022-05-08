@@ -3,22 +3,34 @@ import { Button, Form } from 'react-bootstrap'
 import { useParams, useNavigate } from 'react-router-dom'
 import UserForm from '../components/sub_components/UserForm'
 import { FaUser } from 'react-icons/fa'
+import { useDispatch } from 'react-redux'
+import { logout, reset } from '../features/auth/authSlice'
+
 // import { requestOptions } from '../utilities.js/variables'
 
 function EditUserDetails() {
   const [userInformation, setUserInformation] = useState('')
   const params = useParams()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  //   const API_URL_UPDATE_USER_INFO = `/api/users/update-user-info/${params.userId}`
-
+  const API_URL_UPDATE_USER_INFO = `/api/users/update-user-info/${params.userId}`
   const API_URL_DELETE_USER_INFO = `/api/users/update-user-info/${params.userId}`
-
   const API_URL_GET_USER_INFO = `/api/users/user-info/${params.userId}`
+
   const userInfo = JSON.parse(localStorage.getItem('user'))
   const token = userInfo.token
+
   const requestOptions = {
     method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const requestDeleteOptions = {
+    method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
@@ -28,19 +40,21 @@ function EditUserDetails() {
   const handleDelete = () => {
     console.log({ Deleted: userInformation._id })
     const fetchData = async () => {
-      const response = await fetch(API_URL_DELETE_USER_INFO, {
-        method: 'DELETE',
-      })
+      const response = await fetch(
+        API_URL_DELETE_USER_INFO,
+        requestDeleteOptions
+      )
     }
     fetchData()
 
     // delete all user vehicles
-    // navigate to home page
+    dispatch(logout())
+    dispatch(reset(navigate('/')))
   }
 
   useEffect(() => {
     if (!userInfo) {
-      navigate('/homepage')
+      navigate('/')
     }
     const fetchData = async () => {
       const response = await fetch(API_URL_GET_USER_INFO, requestOptions)
