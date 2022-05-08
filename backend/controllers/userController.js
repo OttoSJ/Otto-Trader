@@ -34,9 +34,9 @@ const getUsersInventory = asyncHandler(async (req, res) => {
       res.status(401)
       throw new Error('User not Authorized')
     }
-    const user = await User.findById(req.params.userId).populate([
-      { path: 'vehicleinventory', model: 'Car' },
-    ])
+    const user = await User.findById(req.params.userId)
+      .populate([{ path: 'vehicleinventory', model: 'Car' }])
+      .select('-password')
     res.status(201).json(user)
   } catch (error) {
     res.status(500).json({ message: error })
@@ -138,9 +138,8 @@ const updateUser = asyncHandler(async (req, res) => {
 
   try {
     const updateUserInfo = await User.findByIdAndUpdate(
-      req.params.userId,
-      req.body,
-      { new: true }
+      { _id: req.params.userId },
+      { $addToSet: req.body }
     )
 
     res.status(200).json(updateUserInfo)

@@ -104,8 +104,8 @@ function EditCarDetails({ handleFormData }) {
   }
 
   const handleDelete = () => {
-    console.log('clicked')
     navigate('/sellerdashboard')
+    // Needs to delete vehicle from uesr array (create delete route on backend for this and call it here)
     dispatch(deleteCar(carDetails._id))
   }
 

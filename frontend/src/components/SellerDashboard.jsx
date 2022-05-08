@@ -1,34 +1,32 @@
-import React from 'react'
+import { Button } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { getCars } from '../features/cars/carSlice'
 import { numberWithCommas } from '../utilities.js/functions'
 import { upperCase } from '../utilities.js/functions'
 import Spinner from './Spinner'
 
 function SellerDashboard() {
-  // const [sellersInventory, setSellersInventory] = useState('')
-  const { cars } = useSelector((state) => state.cars)
   const { user } = useSelector((state) => state.auth)
+  const [sellersInventory, setSellersInventory] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [loading, setLoading] = useState(true)
+  const userInfo = JSON.parse(localStorage.getItem('user'))
 
-  console.log(user._id)
+  const API_URL_GET_USERS_INVENTORY = `api/users/inventory/${userInfo._id}`
 
   useEffect(() => {
-    // You can do a fetch request here and use localstorage to get the users id to pass to the url or use the state (line 13) to get the users id.
+    const fetchData = async () => {
+      const response = await fetch(API_URL_GET_USERS_INVENTORY)
+      const resData = await response.json()
+      setSellersInventory(resData.vehicleinventory)
+      console.log(resData)
+    }
+    fetchData()
     if (!user) {
       navigate('/login')
     }
-    dispatch(getCars())
-    if (cars) {
-      setLoading(false)
-    }
-  }, [user, navigate, dispatch])
-
-  const sellersInventory = cars.filter((car) => car.user === user._id)
+  }, [user, navigate, dispatch, API_URL_GET_USERS_INVENTORY])
 
   const handleCarDetails = (e, car) => {
     e.preventDefault()
@@ -40,10 +38,6 @@ function SellerDashboard() {
     e.preventDefault()
 
     navigate(`/editcardetails/${car._id}`)
-  }
-
-  if (loading) {
-    return <Spinner />
   }
 
   return (
@@ -72,19 +66,20 @@ function SellerDashboard() {
                     )}mi`}
                   </p>
                   <div className="mb-3 mx-3 ">
-                    <a
-                      className=""
+                    <Button
+                      className="btn btn-dark mx-5 mt-2"
                       onClick={(e) => handeleEditCarDetails(e, car)}
                     >
-                      Edit Car Details
-                    </a>
+                      Edit Details
+                    </Button>
                   </div>
                 </div>
               </main>
             ))
           ) : (
             <h6 className="container-centered">
-              You have no vehicles in your inventory
+              Loading...
+              <Spinner />
             </h6>
           )}
         </div>
