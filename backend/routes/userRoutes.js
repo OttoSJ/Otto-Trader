@@ -7,6 +7,7 @@ const {
   getSingleUser,
   getUsersInventory,
   updateUser,
+  updateUserInventory,
   deleteUser,
 } = require('../controllers/userController')
 
@@ -20,6 +21,7 @@ router.get('/', getUser)
 router.get('/user-info/:userId', protect, getSingleUser)
 router.get('/inventory/:userId', getUsersInventory)
 router.put('/update-user-info/:userId', protect, updateUser)
+router.put('/update-user-inventory/:userId', protect, updateUserInventory)
 router.delete('/update-user-info/:userId', protect, deleteUser)
 
 module.exports = router

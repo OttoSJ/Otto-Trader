@@ -6,13 +6,12 @@ import { FaUser } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
 
-// import { requestOptions } from '../utilities.js/variables'
-
 function EditUserDetails() {
   const [userInformation, setUserInformation] = useState('')
   const params = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [formData, setFormData] = useState({})
 
   const API_URL_UPDATE_USER_INFO = `/api/users/update-user-info/${params.userId}`
   const API_URL_DELETE_USER_INFO = `/api/users/update-user-info/${params.userId}`
@@ -37,8 +36,34 @@ function EditUserDetails() {
     },
   }
 
+  const requestUpdateOptions = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(formData),
+  }
+
+  const onSubmit = () => {
+    const fetchData = async () => {
+      const response = await fetch(
+        API_URL_UPDATE_USER_INFO,
+        requestUpdateOptions
+      )
+    }
+    fetchData()
+    navigate('/sellerdashboard')
+  }
+
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }))
+  }
+
   const handleDelete = () => {
-    console.log({ Deleted: userInformation._id })
     const fetchData = async () => {
       const response = await fetch(
         API_URL_DELETE_USER_INFO,
@@ -60,6 +85,7 @@ function EditUserDetails() {
       const response = await fetch(API_URL_GET_USER_INFO, requestOptions)
       const resData = await response.json()
       setUserInformation(resData)
+      setFormData(resData)
     }
     fetchData()
   }, [API_URL_GET_USER_INFO, navigate])
@@ -72,8 +98,8 @@ function EditUserDetails() {
         <p className="p-5">Edit Your Information Below</p>
       </h1>
 
-      <Form className="container">
-        <UserForm userInformation={userInformation} />
+      <Form onSubmit={onSubmit} className="container">
+        <UserForm onChange={onChange} userInformation={userInformation} />
         <Button
           onClick={() => handleDelete()}
           className="btn btn-danger col-5 mt-5 m-3"

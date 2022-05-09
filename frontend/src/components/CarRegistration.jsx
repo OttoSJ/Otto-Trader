@@ -102,9 +102,9 @@ function CarRegistration() {
     }
     console.log(carData)
     dispatch(createCar(carData))
-    // Once car is created get response with car Id and place it in State
-    // Next pass it to function that will update user with new carId onto vehicleinventory: ref array ** See carService line 14 notes
-    navigate('/sellerdashboard')
+    setTimeout(() => {
+      navigate('/sellerdashboard')
+    }, 2500)
   }
 
   const onChange = (e) => {

@@ -9,6 +9,7 @@ import Spinner from './Spinner'
 function SellerDashboard() {
   const { user } = useSelector((state) => state.auth)
   const [sellersInventory, setSellersInventory] = useState('')
+  const [sellersName, setSellersName] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const userInfo = JSON.parse(localStorage.getItem('user'))
@@ -20,7 +21,10 @@ function SellerDashboard() {
       const response = await fetch(API_URL_GET_USERS_INVENTORY)
       const resData = await response.json()
       setSellersInventory(resData.vehicleinventory)
-      console.log(resData)
+      setSellersName([
+        { firstname: resData.firstname },
+        { lastname: resData.lastname },
+      ])
     }
     fetchData()
     if (!user) {
@@ -45,6 +49,14 @@ function SellerDashboard() {
       <div className="sellers-page-container">
         <div className="headings">
           <h1 className="mb-5">Seller's Dashboard</h1>
+          <h3 className="mb-3">
+            Welcome Back{' '}
+            {sellersName ? (
+              <>
+                {sellersName[0].firstname} {sellersName[1].lastname}
+              </>
+            ) : null}
+          </h3>
         </div>
 
         <div className="main-display-container">

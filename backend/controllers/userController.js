@@ -8,7 +8,10 @@ const User = require('../models/userModel')
 // GET - GET SINGLE USER FUNCTION
 const getSingleUser = asyncHandler(async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId).select('-password')
+    const user = await User.findById(req.params.userId)
+      .select('-password')
+      .select('-_id')
+      .select('-vehicleinventory')
 
     if (!user) {
       res.status(401)
@@ -138,6 +141,30 @@ const updateUser = asyncHandler(async (req, res) => {
 
   try {
     const updateUserInfo = await User.findByIdAndUpdate(
+      // { _id: req.params.userId },
+      // { $addToSet: req.body }
+      req.params.userId,
+      req.body,
+      { new: true }
+    )
+
+    res.status(200).json(updateUserInfo)
+  } catch (error) {
+    res.status(400).json({
+      message: error,
+    })
+  }
+})
+
+const updateUserInventory = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.userId)
+  if (!user) {
+    res.status(404)
+    throw new Error('User not found')
+  }
+
+  try {
+    const updateUserInfo = await User.findByIdAndUpdate(
       { _id: req.params.userId },
       { $addToSet: req.body }
     )
@@ -179,5 +206,6 @@ module.exports = {
   getSingleUser,
   getUsersInventory,
   updateUser,
+  updateUserInventory,
   deleteUser,
 }

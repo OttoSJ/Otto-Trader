@@ -11,7 +11,9 @@ const createCar = async (carData, token) => {
 
   const response = await axios.post(API_URL, carData, config)
 
-  const API_URL_UPDATE_USER = `/api/users/update-user-info/${response.data.user}`
+  // const API_URL_UPDATE_USER = `/api/users/update-user-info/${response.data.user}`
+
+  const API_URL_UPDATE_USER = `/api/users/update-user-inventory/${response.data.user}`
 
   const carId = { vehicleinventory: response.data._id }
 
