@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const User = require('../models/userModel')
+const Car = require('../models/carModel')
+const { findById } = require('../models/userModel')
 
 // ALL GET REQUEST //////////////////////////////////////
 
@@ -141,8 +143,6 @@ const updateUser = asyncHandler(async (req, res) => {
 
   try {
     const updateUserInfo = await User.findByIdAndUpdate(
-      // { _id: req.params.userId },
-      // { $addToSet: req.body }
       req.params.userId,
       req.body,
       { new: true }
@@ -177,6 +177,23 @@ const updateUserInventory = asyncHandler(async (req, res) => {
   }
 })
 
+const removeCarFromInventory = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.body.userId },
+      {
+        $pull: { vehicleinventory: req.body.carId },
+      },
+      { multi: true }
+    )
+
+    res.status(200).json(user)
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({ message: error })
+  }
+})
+
 // ALL DELETE REQUEST //////////////////////////////////
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.userId)
@@ -208,4 +225,5 @@ module.exports = {
   updateUser,
   updateUserInventory,
   deleteUser,
+  removeCarFromInventory,
 }

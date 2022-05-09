@@ -43,6 +43,7 @@ function SellerDashboard() {
 
     navigate(`/editcardetails/${car._id}`)
   }
+  console.log(sellersInventory)
 
   return (
     <>

@@ -66,6 +66,19 @@ function EditCarDetails({ handleFormData }) {
   const navigate = useNavigate()
   const params = useParams()
   const API_URL = `/api/inventory/cardetails/${params.id}`
+  const userInfo = JSON.parse(localStorage.getItem('user'))
+  const token = userInfo.token
+
+  const API_URL_UPDATE_CAR_INVENTORY = `/api/users/remove-car-from-inventory/${params.id}`
+
+  const requestUpdateOptions = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ userId: user._id, carId: params.id }),
+  }
 
   useEffect(() => {
     if (!user) {
@@ -103,10 +116,19 @@ function EditCarDetails({ handleFormData }) {
     }))
   }
 
-  const handleDelete = () => {
-    navigate('/sellerdashboard')
-    // Needs to delete vehicle from uesr array (create delete route on backend for this and call it here)
+  const handleDelete = (e) => {
+    const fetchData = async () => {
+      const response = await fetch(
+        API_URL_UPDATE_CAR_INVENTORY,
+        requestUpdateOptions
+      )
+      const resData = await response.json()
+      console.log(resData)
+    }
+
+    fetchData()
     dispatch(deleteCar(carDetails._id))
+    navigate('/sellerdashboard')
   }
 
   const formDetails = () => {
@@ -414,7 +436,7 @@ function EditCarDetails({ handleFormData }) {
 
           <div className="col-12 mb-5  container">
             <button
-              onClick={() => handleDelete()}
+              onClick={(e) => handleDelete(e)}
               className="btn btn-danger col-5 m-2 "
             >
               Delete
