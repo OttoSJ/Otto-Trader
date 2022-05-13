@@ -27,7 +27,14 @@ const getSingleUser = asyncHandler(async (req, res) => {
 
 // GET - GET ALL USERS FUNCTION
 const getUser = asyncHandler(async (req, res) => {
-  const allUsers = await User.find()
+  const allUsers = await User.find().select([
+    '-password',
+    '-address',
+    '-city',
+    '-state',
+    '-zip',
+  ])
+
   res.status(200).json(allUsers)
 })
 
@@ -209,6 +216,31 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 })
 
+const deleteInventory = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId).select([
+      '-username',
+      '-email',
+      '-firstname',
+      '-lastname',
+      '-password',
+      '-address',
+      '-city',
+      '-state',
+      '-zip',
+    ])
+
+    if (!user) {
+      res.status(401)
+      throw new Error('User not authorized')
+    }
+    const car = await Car.deleteMany({ _id: { $in: user.vehicleinventory } })
+    res.status(200).json({ 'Deleted Inventory': user.vehicleinventory })
+  } catch (error) {
+    res.status(400).json({ message: error })
+  }
+})
+
 // UTILITY FUNCTIONS FOR ROUTES /////////////////////////
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -224,6 +256,7 @@ module.exports = {
   getUsersInventory,
   updateUser,
   updateUserInventory,
-  deleteUser,
   removeCarFromInventory,
+  deleteUser,
+  deleteInventory,
 }

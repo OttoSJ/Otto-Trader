@@ -67,10 +67,10 @@ function CarRegistration() {
     if (isError) {
       toast.error(message)
     }
-
-    if (isSuccess) {
-      setLoading(false)
-    }
+    // THIS SETTIMEOUT WILL CAUSE A ERROR IN CONSOLE, NEED TO FIND A BETTER SOLUTION
+    // setTimeout(() => {
+    //   setLoading(false)
+    // }, 2000)
 
     dispatch(reset())
   }, [car, isError, isSuccess, message, navigate, dispatch, loading])
@@ -114,9 +114,9 @@ function CarRegistration() {
     }))
   }
 
-  if (loading) {
-    return <Spinner />
-  }
+  // if (loading) {
+  //   return <Spinner />
+  // }
 
   return (
     <div>

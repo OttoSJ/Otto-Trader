@@ -16,6 +16,7 @@ function EditUserDetails() {
   const API_URL_UPDATE_USER_INFO = `/api/users/update-user-info/${params.userId}`
   const API_URL_DELETE_USER_INFO = `/api/users/update-user-info/${params.userId}`
   const API_URL_GET_USER_INFO = `/api/users/user-info/${params.userId}`
+  const API_URL_DELETE_USER_INVENTORY_INFO = `/api/users/delete-users-inventory/${params.userId}`
 
   const userInfo = JSON.parse(localStorage.getItem('user'))
   const token = userInfo.token
@@ -28,7 +29,15 @@ function EditUserDetails() {
     },
   }
 
-  const requestDeleteOptions = {
+  const requestDeleteUserOptions = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const requestDeleteInventoryOptions = {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -65,14 +74,17 @@ function EditUserDetails() {
 
   const handleDelete = () => {
     const fetchData = async () => {
-      const response = await fetch(
+      const resDeleteInventory = await fetch(
+        API_URL_DELETE_USER_INVENTORY_INFO,
+        requestDeleteInventoryOptions
+      )
+      const resDeleteUser = await fetch(
         API_URL_DELETE_USER_INFO,
-        requestDeleteOptions
+        requestDeleteUserOptions
       )
     }
     fetchData()
 
-    // delete all user vehicles
     dispatch(logout())
     dispatch(reset(navigate('/')))
   }

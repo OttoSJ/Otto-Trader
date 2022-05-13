@@ -85,6 +85,7 @@ const setCar = asyncHandler(async (req, res) => {
 })
 
 const updateCar = asyncHandler(async (req, res) => {
+  // I need to improve this route with try catch
   const car = await Car.findById(req.params.id)
   if (!car) {
     res.status(400)
@@ -109,6 +110,7 @@ const updateCar = asyncHandler(async (req, res) => {
 })
 
 const deleteCar = asyncHandler(async (req, res) => {
+  // I need to improve this route with try catch
   const car = await Car.findById(req.params.id)
 
   if (!car) {

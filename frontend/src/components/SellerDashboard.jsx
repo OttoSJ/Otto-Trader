@@ -13,12 +13,21 @@ function SellerDashboard() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const userInfo = JSON.parse(localStorage.getItem('user'))
+  const token = userInfo.token
 
   const API_URL_GET_USERS_INVENTORY = `api/users/inventory/${userInfo._id}`
 
+  const requestOptions = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(API_URL_GET_USERS_INVENTORY)
+      const response = await fetch(API_URL_GET_USERS_INVENTORY, requestOptions)
       const resData = await response.json()
       setSellersInventory(resData.vehicleinventory)
       setSellersName([
@@ -91,8 +100,9 @@ function SellerDashboard() {
             ))
           ) : (
             <h6 className="container-centered">
-              Loading...
-              <Spinner />
+              {/* Loading...
+              <Spinner /> */}
+              You have no inventory
             </h6>
           )}
         </div>

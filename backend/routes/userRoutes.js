@@ -8,8 +8,9 @@ const {
   getUsersInventory,
   updateUser,
   updateUserInventory,
-  deleteUser,
   removeCarFromInventory,
+  deleteUser,
+  deleteInventory,
 } = require('../controllers/userController')
 
 const { protect } = require('../middleware/authMiddleware')
@@ -19,7 +20,7 @@ const { protect } = require('../middleware/authMiddleware')
 // ALL GET ROUTES
 router.get('/', getUser)
 router.get('/user-info/:userId', protect, getSingleUser)
-router.get('/inventory/:userId', getUsersInventory)
+router.get('/inventory/:userId', protect, getUsersInventory)
 
 // ALL POST ROUTES
 router.post('/', registerUser)
@@ -32,5 +33,6 @@ router.put('/remove-car-from-inventory/:carId', protect, removeCarFromInventory)
 
 // ALL DELETE ROUTES
 router.delete('/update-user-info/:userId', protect, deleteUser)
+router.delete('/delete-users-inventory/:userId', protect, deleteInventory)
 
 module.exports = router
